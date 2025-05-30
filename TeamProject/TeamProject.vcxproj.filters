@@ -26,6 +26,9 @@
     <Filter Include="99. Headers">
       <UniqueIdentifier>{52bfeafb-3124-41a7-99cc-8c566bef4409}</UniqueIdentifier>
     </Filter>
+    <Filter Include="07. Package">
+      <UniqueIdentifier>{710d90db-17f7-4a78-bb2f-357816e7667f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core.cpp">
@@ -34,10 +37,16 @@
     <ClCompile Include="main.cpp">
       <Filter>01. Core</Filter>
     </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>07. Package</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
       <Filter>01. Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>07. Package</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
