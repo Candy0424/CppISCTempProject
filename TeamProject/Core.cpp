@@ -7,6 +7,7 @@ void Core::Run()
 		Update();
 		Render();
 		// FrameSync
+		//테스트입니다.
 	}
 }
 
