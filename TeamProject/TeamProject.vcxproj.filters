@@ -40,12 +40,18 @@
     <ClCompile Include="Console.cpp">
       <Filter>07. Package</Filter>
     </ClCompile>
+    <ClCompile Include="Mci.cpp">
+      <Filter>07. Package</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core.h">
       <Filter>01. Core</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
+      <Filter>07. Package</Filter>
+    </ClInclude>
+    <ClInclude Include="Mci.h">
       <Filter>07. Package</Filter>
     </ClInclude>
   </ItemGroup>
