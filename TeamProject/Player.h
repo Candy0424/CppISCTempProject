@@ -16,12 +16,12 @@ class Player
 private:
     Player();
 public:
-	static Player* GetInstance()
+	static Player* GetInstance(int& life)
 	{
 		if (instance == nullptr)
 		{
 			instance = new Player();
-			instance->InitPlayer();
+			instance->InitPlayer(life);
 		}
 		return instance;
 	}
@@ -29,10 +29,12 @@ public:
     {
 		SAFE_DELETE(instance);
     }
-    POS position;
+    POS nodeOnePosition;
+	POS nodeTwoPosition;
+
     int life;
     bool isDie;
-    void InitPlayer();
+    void InitPlayer(int& life);
 
 private:
     static Player* instance;

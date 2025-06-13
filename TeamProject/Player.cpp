@@ -1,9 +1,12 @@
 #include "Player.h"
 
-void Player::InitPlayer()
+void Player::InitPlayer(int& life)
 {
-	position.x = 0;
-	position.y = 0;
-	life = 3;
+	nodeOnePosition.x = 20;
+	nodeOnePosition.y = 30;
+
+	nodeTwoPosition.x = 20;
+	nodeTwoPosition.y = 35;
+	this->life = life;
 	isDie = false;
 }
