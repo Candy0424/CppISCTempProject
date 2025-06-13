@@ -8,9 +8,9 @@ struct NoteChartInfo {
     int lane;
 };
 
-class NodeScroll {
+class NodeManager {
 public:
-    NodeScroll(int playAreaWidth, int laneCount, int startX, int maxNodeCount);
+    NodeManager(int playAreaWidth, int laneCount, int startX, int maxNodeCount);
 
     void LoadChart(const std::string& filename);
     void Update(float currentTime);

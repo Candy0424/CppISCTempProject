@@ -70,4 +70,9 @@
       <Filter>99. Headers</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Chart.txt">
+      <Filter>05. Resource</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

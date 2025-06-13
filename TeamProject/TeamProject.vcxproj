@@ -34,6 +34,9 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeScroll.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Chart.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
