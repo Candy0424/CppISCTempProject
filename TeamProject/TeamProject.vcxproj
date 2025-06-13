@@ -21,16 +21,14 @@
   <ItemGroup>
     <ClInclude Include="Console.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="Mci.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="NodeScroll.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mci.cpp" />
-    <ClCompile Include="NodeScroll.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
