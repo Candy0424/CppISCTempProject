@@ -21,18 +21,23 @@
   <ItemGroup>
     <ClInclude Include="Console.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="Defines.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="Mci.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeScroll.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mci.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeScroll.cpp" />
+    <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Chart.txt" />
