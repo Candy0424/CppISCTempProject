@@ -46,20 +46,28 @@
     <ClCompile Include="NodeScroll.cpp">
       <Filter>02. Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>03. Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core.h">
-      <Filter>01. Core</Filter>
+    <ClInclude Include="Enums.h">
+      <Filter>99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
-      <Filter>07. Package</Filter>
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="Mci.h">
-      <Filter>07. Package</Filter>
+      <Filter>99. Headers</Filter>
     </ClInclude>
-    <ClInclude Include="NodeScroll.h" />
-    <ClInclude Include="Node.h">
-      <Filter>03. Object</Filter>
+    <ClInclude Include="Core.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeScroll.h">
+      <Filter>99. Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
