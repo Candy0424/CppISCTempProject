@@ -49,6 +49,12 @@
     <ClCompile Include="Node.cpp">
       <Filter>03. Object</Filter>
     </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>04. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>03. Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -67,6 +73,15 @@
       <Filter>99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="NodeScroll.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
   </ItemGroup>
