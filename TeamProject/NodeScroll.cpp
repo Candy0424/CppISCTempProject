@@ -3,18 +3,18 @@
 #include <iostream>
 #include "Console.h"
 
-NodeScroll::NodeScroll(int playAreaWidth, int laneCount, int startX, int maxNodeCount)
+NodeManager::NodeManager(int playAreaWidth, int laneCount, int startX, int maxNodeCount)
     : areaWidth(playAreaWidth), laneCount(laneCount), startX(startX) {
-    judgeLineX = areaWidth - 5;
+    judgeLineX = 5;
     nodePool.resize(maxNodeCount);
 }
 
-void NodeScroll::LoadChart(const std::string& filename) {
+void NodeManager::LoadChart(const std::string& filename) {
     chart.clear();
     nextChartIdx = 0;
     std::ifstream fin(filename);
     if (!fin.is_open()) {
-        std::cerr << "채보 파일 오픈 실패: " << filename << std::endl;
+        std::cerr << "채보 파일을 열 수 없습니다. 이름을 확인하세요 " << filename << std::endl;
         return;
     }
     float t; int lane;
@@ -24,13 +24,13 @@ void NodeScroll::LoadChart(const std::string& filename) {
     fin.close();
 }
 
-void NodeScroll::Update(float currentTime) {
+void NodeManager::Update(float currentTime) {
     while (nextChartIdx < chart.size() && currentTime >= chart[nextChartIdx].spawnTime) {
         bool activated = false;
         for (auto& node : nodePool) {
             if (!node.active) {
                 int y = LaneToY(chart[nextChartIdx].lane);
-                node.Activate(chart[nextChartIdx].spawnTime, chart[nextChartIdx].lane, startX, y);
+                node.Activate(chart[nextChartIdx].spawnTime, chart[nextChartIdx].lane, areaWidth - 1, y);
                 activated = true;
                 break;
             }
@@ -40,14 +40,14 @@ void NodeScroll::Update(float currentTime) {
 
     for (auto& node : nodePool) {
         if (!node.active) continue;
-        node.x += 1;
-        if (node.x > areaWidth || node.isHit) {
+        node.x -= 1;
+        if (node.x < 0 || node.isHit) {
             node.Deactivate();
         }
     }
 }
 
-void NodeScroll::Render() const {
+void NodeManager::Render() const {
     for (const auto& node : nodePool) {
         if (!node.active) continue;
         SetColor(COLOR::YELLOW);
@@ -57,7 +57,7 @@ void NodeScroll::Render() const {
     }
 }
 
-Node* NodeScroll::GetJudgeableNode(int lane) {
+Node* NodeManager::GetJudgeableNode(int lane) {
     for (auto& node : nodePool) {
         if (node.active && node.lane == lane && node.x == judgeLineX && !node.isHit)
             return &node;
@@ -65,10 +65,10 @@ Node* NodeScroll::GetJudgeableNode(int lane) {
     return nullptr;
 }
 
-void NodeScroll::HitNode(Node* node) {
+void NodeManager::HitNode(Node* node) {
     if (node) node->isHit = true;
 }
 
-int NodeScroll::LaneToY(int laneIndex) const {
+int NodeManager::LaneToY(int laneIndex) const {
     return 5 + laneIndex * 2;
 }
