@@ -1,17 +1,14 @@
 #pragma once
-#include"NodeScroll.h"
+#include "Scene.h"
 class Core
 {
 public:
-	void Run();
-
-	Core();
-	~Core();
+    void Run();
+    Core();
+    ~Core();
 private:
-	void Init();
-	void Update();
-	void Render();
-
-	NodeManager* nodeScroll;
-	float currentTime;
+    void Init();
+    void Update();
+    void Render();
+    SceneScript* scene;
 };

@@ -1,11 +1,15 @@
 #include "NodeScroll.h"
 #include <fstream>
 #include <iostream>
+#include <cmath>
 #include "Console.h"
 
-NodeManager::NodeManager(int playAreaWidth, int laneCount, int startX, int maxNodeCount)
-    : areaWidth(playAreaWidth), laneCount(laneCount), startX(startX) {
-    judgeLineX = 5;
+NodeManager::NodeManager(int playAreaWidth, int playAreaHeight, int maxNodeCount)
+    : areaWidth(playAreaWidth), areaHeight(playAreaHeight), laneCount(2)
+{
+    int centerX = areaWidth / 2;
+    judgeLineX = centerX - 20;
+    startX = areaWidth - 2;
     nodePool.resize(maxNodeCount);
 }
 
@@ -26,43 +30,64 @@ void NodeManager::LoadChart(const std::string& filename) {
 
 void NodeManager::Update(float currentTime) {
     while (nextChartIdx < chart.size() && currentTime >= chart[nextChartIdx].spawnTime) {
-        bool activated = false;
         for (auto& node : nodePool) {
             if (!node.active) {
                 int y = LaneToY(chart[nextChartIdx].lane);
-                node.Activate(chart[nextChartIdx].spawnTime, chart[nextChartIdx].lane, areaWidth - 1, y);
-                activated = true;
+                node.Activate(chart[nextChartIdx].spawnTime, chart[nextChartIdx].lane, startX, y);
                 break;
             }
         }
         ++nextChartIdx;
     }
-
     for (auto& node : nodePool) {
         if (!node.active) continue;
+        Gotoxy(node.x, node.y); std::cout << " ";
+        node.prevX = node.x;
+        node.prevY = node.y;
         node.x -= 1;
-        if (node.x < 0 || node.isHit) {
+        if (node.x < judgeLineX - 1 && !node.isHit) {
+            node.Deactivate();
+        }
+        else if (node.x < 0 || node.isHit) {
             node.Deactivate();
         }
     }
 }
 
-void NodeManager::Render() const {
+void NodeManager::Render(const bool judgeState[2]) {
+    int y0 = LaneToY(0);
+    int y1 = LaneToY(1);
+    Gotoxy(judgeLineX, y0); std::cout << (judgeState[0] ? "¡Ú" : "¡ß");
+    Gotoxy(judgeLineX, y1); std::cout << (judgeState[1] ? "¡Ú" : "¡ß");
     for (const auto& node : nodePool) {
         if (!node.active) continue;
-        SetColor(COLOR::YELLOW);
-        Gotoxy(node.x, node.y);
-        std::cout << "¡Ü";
-        SetColor(COLOR::WHITE);
+        Gotoxy(node.x, node.y); std::cout << "¡Ü";
     }
 }
 
-Node* NodeManager::GetJudgeableNode(int lane) {
+Node* NodeManager::GetNearestJudgeableNode(int lane) {
+    Node* best = nullptr;
+    int minDiff = 9999;
     for (auto& node : nodePool) {
-        if (node.active && node.lane == lane && node.x == judgeLineX && !node.isHit)
-            return &node;
+        if (!node.active || node.lane != lane || node.isHit) continue;
+        int diff = std::abs(node.x - judgeLineX);
+        if (diff <= 1 && diff < minDiff) {
+            minDiff = diff;
+            best = &node;
+        }
     }
-    return nullptr;
+    return best;
+}
+
+JudgeResult NodeManager::Judge(int lane) {
+    Node* node = GetNearestJudgeableNode(lane);
+    if (node) {
+        int diff = std::abs(node->x - judgeLineX);
+        HitNode(node);
+        if (diff == 0) return JudgeResult::PERFECT;
+        if (diff == 1) return JudgeResult::GOOD;
+    }
+    return JudgeResult::MISS;
 }
 
 void NodeManager::HitNode(Node* node) {
@@ -70,5 +95,8 @@ void NodeManager::HitNode(Node* node) {
 }
 
 int NodeManager::LaneToY(int laneIndex) const {
-    return 5 + laneIndex * 2;
+    int centerY = areaHeight / 2;
+    if (laneIndex == 0) return centerY - 1;
+    if (laneIndex == 1) return centerY + 1;
+    return centerY;
 }

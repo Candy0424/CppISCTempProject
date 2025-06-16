@@ -9,6 +9,9 @@ void Node::Activate(float time, int laneIndex, int startX, int startY) {
     lane = laneIndex;
     x = startX;
     y = startY;
+
+    prevX = startX;
+    prevY = startY;
     isHit = false;
 }
 
