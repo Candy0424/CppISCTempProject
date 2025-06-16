@@ -14,3 +14,8 @@ enum class Tile
 {
 	NODE, ROAD, INPUT_NODE, SPACE
 };
+
+enum class JudgeResult
+{
+	NONE, PERFECT, GOOD, MISS
+};

@@ -13,5 +13,10 @@ void Node::Activate(float time, int laneIndex, int startX, int startY) {
 }
 
 void Node::Deactivate() {
+    if (isHit == false)
+    {
+        //노드를 못 친 상태로 끝에 도달했을 때. Miss.
+    }
     active = false;
+    //점수 증가 쏴주기
 }
