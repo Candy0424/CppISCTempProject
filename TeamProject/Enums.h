@@ -12,5 +12,5 @@ enum class Scene
 
 enum class Tile
 {
-	NODE, ROAD, INPUT_NODE, SPACE
+	NODE, ROAD, INPUT_NODE, OUTPUT_NODE, SPACE
 };
