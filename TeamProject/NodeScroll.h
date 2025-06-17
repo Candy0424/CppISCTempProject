@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include "Node.h"
+#include "Enums.h"
 
 struct NoteChartInfo {
     float spawnTime;
@@ -10,21 +11,19 @@ struct NoteChartInfo {
 
 class NodeManager {
 public:
-    NodeManager(int playAreaWidth, int laneCount, int startX, int maxNodeCount);
-
+    NodeManager(int playAreaWidth, int playAreaHeight, int maxNodeCount);
     void LoadChart(const std::string& filename);
     void Update(float currentTime);
-    void Render() const;
-
-    Node* GetJudgeableNode(int lane);
+    void Render(const bool judgeState[2]);
+    JudgeResult Judge(int lane);
+    Node* GetNearestJudgeableNode(int lane);
     void HitNode(Node* node);
-
     int LaneToY(int laneIndex) const;
     int judgeLineX;
-
+    int startX;
 private:
     std::vector<Node> nodePool;
     std::vector<NoteChartInfo> chart;
-    int areaWidth, laneCount, startX;
+    int areaWidth, areaHeight, laneCount;
     int nextChartIdx = 0;
 };

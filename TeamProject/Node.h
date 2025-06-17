@@ -6,6 +6,7 @@ struct Node
     int lane;
     int x, y;
     bool isHit;
+    int prevX, prevY;
 
     Node();
 
