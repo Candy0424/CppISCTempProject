@@ -1,6 +1,9 @@
 #pragma once
 #include "Scene.h"
-#include "GameScene.h"
+#include "San232Scene.h"
+#include "Console.h"
+#include "NodeScroll.h"
+#include "InputManager.h"
 class Core
 {
 public:
@@ -12,6 +15,7 @@ private:
     void Update();
     void Render();
     SceneScript* scene;
-    GameScene gameScene;
-    Player* player;
+    bool judgeState[2];
+    float currentTime;
+    int width, height;
 };
