@@ -8,6 +8,9 @@ void Player::InitPlayer(int life)
 
 	downperNode.position.SetpositionXY(20, 18);
 
+	upperNode.tileState = Tile::INPUT_NODE;
+	downperNode.tileState = Tile::INPUT_NODE;
+
 	this->life = life;
 	isDie = false;
 }

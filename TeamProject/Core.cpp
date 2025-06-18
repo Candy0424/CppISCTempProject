@@ -27,15 +27,24 @@ void Core::Run()
 void Core::Init()
 {
     SetConsoleFont(L"Consolas", { 12, 24 }, FW_NORMAL);
+    player = Player::GetInstance();
+	player->InitPlayer(3); // Ã¼·Â 3
+
     if (scene) scene->Init();
+    
+	gameScene.Init(player);
 }
 
 void Core::Update()
 {
     if (scene) scene->Update();
+
+	gameScene.Update(player);
 }
 
 void Core::Render()
 {
     if (scene) scene->Render();
+
+	gameScene.Render(player);
 }

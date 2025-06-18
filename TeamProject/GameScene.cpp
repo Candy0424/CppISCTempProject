@@ -23,8 +23,8 @@ void GameScene::Render(Player* player)
 	int downperY = downperNode->position.y;
 
 	IsGotoxy(upperX, upperY);
-	cout << "G"; // 상단 노드 표시
+	cout << ((upperNode->tileState == Tile::OUTPUT_NODE) ? "●" : "○"); // 상단 노드 표시
 
 	IsGotoxy(downperX, downperY);
-	cout << "F"; // 하단 노드 표시
+	cout << ((downperNode->tileState == Tile::OUTPUT_NODE) ? "●" : "○"); // 상단 노드 표시; // 하단 노드 표시
 }
