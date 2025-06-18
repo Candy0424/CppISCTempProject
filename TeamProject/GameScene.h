@@ -3,8 +3,8 @@
 class GameScene
 {
 public :
-	void Init();
-	void Update();
-	void Render(const Player* player);
+	void Init(Player* player);
+	void Update(Player* player);
+	void Render(Player* player);
 };
 

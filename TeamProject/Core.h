@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "GameScene.h"
 class Core
 {
 public:
@@ -11,4 +12,6 @@ private:
     void Update();
     void Render();
     SceneScript* scene;
+    GameScene gameScene;
+    Player* player;
 };
