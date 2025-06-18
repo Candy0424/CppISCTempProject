@@ -31,6 +31,9 @@ void Core::Run()
 
 void Core::Init()
 {
+	player = Player::GetInstance();
+    player->InitPlayer(3); // 체력 3
+
     SetConsoleFont(L"Consolas", { 12, 24 }, FW_NORMAL);
     SetConsoleSettings(800, 500, false, L"2라인 콘솔 리듬게임");
     COORD res = GetConsoleResolution();
@@ -39,7 +42,11 @@ void Core::Init()
     NodeManager::GetInstance(width, height, 32)->LoadChart("Chart.txt");
     SetCursorVisual(false, 1);
     currentTime = 0.0f;
+
+
     if (scene) scene->Init();
+
+	gameScene.Init(player);
 }
 
 void Core::Update()
@@ -48,6 +55,8 @@ void Core::Update()
     InputManager::GetInstance()->Update(judgeState);
     NodeManager::GetInstance()->Update(currentTime);
     if (scene) scene->Update();
+
+	gameScene.Update(player);
 }
 
 void Core::Render()
@@ -55,4 +64,6 @@ void Core::Render()
     NodeManager::GetInstance()->Render(judgeState);
     judgeState[0] = judgeState[1] = false;
     if (scene) scene->Render();
+
+	gameScene.Render(player);
 }
