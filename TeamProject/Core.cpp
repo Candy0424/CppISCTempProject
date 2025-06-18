@@ -26,6 +26,7 @@ void Core::Run()
 
 void Core::Init()
 {
+    SetConsoleFont(L"Consolas", { 12, 24 }, FW_NORMAL);
     if (scene) scene->Init();
 }
 
