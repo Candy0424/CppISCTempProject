@@ -1,8 +1,27 @@
 #include "NodeScroll.h"
 #include <fstream>
 #include <iostream>
-#include <cmath>
 #include "Console.h"
+#undef max
+#undef min
+#include <algorithm>
+
+
+
+NodeManager* NodeManager::instance = nullptr;
+
+NodeManager* NodeManager::GetInstance(int width, int height, int maxNodeCount) {
+    if (!instance)
+        instance = new NodeManager(width, height, maxNodeCount);
+    return instance;
+}
+
+void NodeManager::DestroyInstance() {
+    if (instance) {
+        delete instance;
+        instance = nullptr;
+    }
+}
 
 NodeManager::NodeManager(int playAreaWidth, int playAreaHeight, int maxNodeCount)
     : areaWidth(playAreaWidth), areaHeight(playAreaHeight), laneCount(2)
@@ -11,7 +30,9 @@ NodeManager::NodeManager(int playAreaWidth, int playAreaHeight, int maxNodeCount
     judgeLineX = centerX - 20;
     startX = areaWidth - 2;
     nodePool.resize(maxNodeCount);
+    mapBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
 }
+NodeManager::~NodeManager() {}
 
 void NodeManager::LoadChart(const std::string& filename) {
     chart.clear();
@@ -41,37 +62,82 @@ void NodeManager::Update(float currentTime) {
     }
     for (auto& node : nodePool) {
         if (!node.active) continue;
-        Gotoxy(node.x, node.y); std::cout << " ";
         node.prevX = node.x;
         node.prevY = node.y;
         node.x -= 1;
-        if (node.x < judgeLineX - 1 && !node.isHit) {
+        if (node.x < judgeLineX - 3 && !node.isHit) {
+            RegisterJudgeMsg(node.lane, JudgeResult::MISS, 30);
             node.Deactivate();
         }
         else if (node.x < 0 || node.isHit) {
             node.Deactivate();
         }
     }
-}
-
-void NodeManager::Render(const bool judgeState[2]) {
-    int y0 = LaneToY(0);
-    int y1 = LaneToY(1);
-    Gotoxy(judgeLineX, y0); std::cout << (judgeState[0] ? "¡Ú" : "¡ß");
-    Gotoxy(judgeLineX, y1); std::cout << (judgeState[1] ? "¡Ú" : "¡ß");
-    for (const auto& node : nodePool) {
-        if (!node.active) continue;
-        Gotoxy(node.x, node.y); std::cout << "¡Ü";
+    for (int l = 0; l < 2; ++l) {
+        for (auto& msg : judgeMsgs[l])
+            if (msg.frameLeft > 0) --msg.frameLeft;
+        while (!judgeMsgs[l].empty() && judgeMsgs[l].front().frameLeft <= 0)
+            judgeMsgs[l].erase(judgeMsgs[l].begin());
     }
 }
 
-Node* NodeManager::GetNearestJudgeableNode(int lane) {
+void NodeManager::FillMapBuffer(const bool judgeState[2]) {
+    for (auto& row : mapBuffer) std::fill(row.begin(), row.end(), Tile::SPACE);
+    for (int l = 0; l < laneCount; ++l)
+        mapBuffer[LaneToY(l)][judgeLineX] = judgeState[l] ? Tile::INPUT_NODE : Tile::ROAD;
+    for (const auto& node : nodePool) {
+        if (node.active && node.x >= 0 && node.x < areaWidth && node.y >= 0 && node.y < areaHeight)
+            mapBuffer[node.y][node.x] = Tile::NODE;
+    }
+}
+
+static void PrintJudgeResult(JudgeResult r) {
+    switch (r) {
+    case JudgeResult::PERFECT: std::cout << "PERFECT!"; break;
+    case JudgeResult::GOOD:    std::cout << "GOOD!"; break;
+    case JudgeResult::MISS:    std::cout << "MISS!"; break;
+    default: break;
+    }
+}
+
+void NodeManager::Render(const bool judgeState[2]) {
+    FillMapBuffer(judgeState);
+    for (int y = 0; y < areaHeight; ++y) {
+        Gotoxy(0, y);
+        for (int x = 0; x < areaWidth; ++x) {
+            switch (mapBuffer[y][x]) {
+            case Tile::NODE: std::cout << "¡Ü"; break;
+            case Tile::INPUT_NODE: std::cout << "¡Ú"; break;
+            case Tile::ROAD: std::cout << "¡ß"; break;
+            case Tile::SPACE: std::cout << " "; break;
+            default: std::cout << " "; break;
+            }
+        }
+    }
+    int y0 = LaneToY(0), y1 = LaneToY(1);
+    int msgY0 = std::max(0, y0 - 2 - (int)judgeMsgs[0].size());
+    for (size_t i = 0; i < judgeMsgs[0].size(); ++i) {
+        if (judgeMsgs[0][i].frameLeft > 0) {
+            Gotoxy(judgeLineX + 3, msgY0 + (int)i);
+            PrintJudgeResult(judgeMsgs[0][i].result);
+        }
+    }
+    int msgY1 = y1 + 2;
+    for (size_t i = 0; i < judgeMsgs[1].size(); ++i) {
+        if (judgeMsgs[1][i].frameLeft > 0) {
+            Gotoxy(judgeLineX + 3, msgY1 + (int)i);
+            PrintJudgeResult(judgeMsgs[1][i].result);
+        }
+    }
+}
+
+Node* NodeManager::GetNearestJudgeableNode(int lane, int judgeRange) {
     Node* best = nullptr;
     int minDiff = 9999;
     for (auto& node : nodePool) {
         if (!node.active || node.lane != lane || node.isHit) continue;
         int diff = std::abs(node.x - judgeLineX);
-        if (diff <= 1 && diff < minDiff) {
+        if (diff <= judgeRange && diff < minDiff) {
             minDiff = diff;
             best = &node;
         }
@@ -80,14 +146,14 @@ Node* NodeManager::GetNearestJudgeableNode(int lane) {
 }
 
 JudgeResult NodeManager::Judge(int lane) {
-    Node* node = GetNearestJudgeableNode(lane);
+    Node* node = GetNearestJudgeableNode(lane, 2);
     if (node) {
         int diff = std::abs(node->x - judgeLineX);
         HitNode(node);
-        if (diff == 0) return JudgeResult::PERFECT;
-        if (diff == 1) return JudgeResult::GOOD;
+        if (diff <= 1) return JudgeResult::PERFECT;
+        if (diff == 2) return JudgeResult::GOOD;
     }
-    return JudgeResult::MISS;
+    return JudgeResult::NONE;
 }
 
 void NodeManager::HitNode(Node* node) {
@@ -99,4 +165,11 @@ int NodeManager::LaneToY(int laneIndex) const {
     if (laneIndex == 0) return centerY - 1;
     if (laneIndex == 1) return centerY + 1;
     return centerY;
+}
+
+void NodeManager::RegisterJudgeMsg(int lane, JudgeResult res, int duration) {
+    if (res == JudgeResult::NONE) return;
+    if (judgeMsgs[lane].size() >= 10)
+        judgeMsgs[lane].erase(judgeMsgs[lane].begin());
+    judgeMsgs[lane].push_back({ res, duration });
 }

@@ -1,8 +1,12 @@
 #pragma once
-#include "NodeScroll.h"
 #include "Enums.h"
 
 class InputManager {
 public:
-    void Update(NodeManager* nodeManager, bool judgeState[2]);
+    static InputManager* GetInstance();
+    static void DestroyInstance();
+    void Update(bool judgeState[2]);
+private:
+    InputManager();
+    static InputManager* instance;
 };

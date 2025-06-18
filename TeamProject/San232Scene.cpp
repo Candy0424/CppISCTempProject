@@ -1,42 +1,30 @@
 #include "San232Scene.h"
 #include "Console.h"
+#include "NodeScroll.h"
+#include "InputManager.h"
 
-San232Scene::San232Scene()
-    : nodeScroll(nullptr), inputManager(nullptr), currentTime(0.0f)
-{
-    
-    inputManager = new InputManager();
+San232Scene::San232Scene() : currentTime(0.0f) {
     judgeState[0] = false; judgeState[1] = false;
 }
-
-San232Scene::~San232Scene()
-{
-    delete nodeScroll;
-    delete inputManager;
+San232Scene::~San232Scene() {
+    NodeManager::DestroyInstance();
+    InputManager::DestroyInstance();
 }
-
-void San232Scene::Init()
-{
+void San232Scene::Init() {
     SetConsoleSettings(800, 500, false, L"2라인 콘솔 리듬게임");
     COORD res = GetConsoleResolution();
     width = res.X;
     height = res.Y;
-    nodeScroll = new NodeManager(width, height, 32);
+    NodeManager::GetInstance(width, height, 32)->LoadChart("Chart.txt");
     SetCursorVisual(false, 1);
-    nodeScroll->LoadChart("Chart.txt");
     currentTime = 0.0f;
 }
-
-void San232Scene::Update()
-{
+void San232Scene::Update() {
     currentTime += 0.016f;
-    inputManager->Update(nodeScroll, judgeState);
-    nodeScroll->Update(currentTime);
+    InputManager::GetInstance()->Update(judgeState);
+    NodeManager::GetInstance()->Update(currentTime);
 }
-
-void San232Scene::Render()
-{
-    nodeScroll->Render(judgeState);
-    judgeState[0] = false;
-    judgeState[1] = false;
+void San232Scene::Render() {
+    NodeManager::GetInstance()->Render(judgeState);
+    judgeState[0] = judgeState[1] = false;
 }
