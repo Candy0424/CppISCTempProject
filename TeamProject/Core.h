@@ -4,6 +4,7 @@
 #include "Console.h"
 #include "NodeScroll.h"
 #include "InputManager.h"
+#include "GameScene.h"
 class Core
 {
 public:
@@ -18,4 +19,6 @@ private:
     bool judgeState[2];
     float currentTime;
     int width, height;
+    GameScene gameScene;
+    Player* player;
 };
