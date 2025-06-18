@@ -52,7 +52,7 @@ void Core::Init()
 void Core::Update()
 {
     currentTime += 0.016f;
-    InputManager::GetInstance()->Update(judgeState);
+    InputManager::GetInstance()->Update(judgeState, player);
     NodeManager::GetInstance()->Update(currentTime);
     if (scene) scene->Update();
 

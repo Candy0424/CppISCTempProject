@@ -107,8 +107,6 @@ void NodeManager::Render(const bool judgeState[2]) {
         for (int x = 0; x < areaWidth; ++x) {
             switch (mapBuffer[y][x]) {
             case Tile::NODE: std::cout << "¡Ü"; break;
-            case Tile::INPUT_NODE: std::cout << "¡Ú"; break;
-            case Tile::ROAD: std::cout << "¡ß"; break;
             case Tile::SPACE: std::cout << " "; break;
             default: std::cout << " "; break;
             }
@@ -161,9 +159,9 @@ void NodeManager::HitNode(Node* node) {
 }
 
 int NodeManager::LaneToY(int laneIndex) const {
-    int centerY = areaHeight / 2;
-    if (laneIndex == 0) return centerY - 1;
-    if (laneIndex == 1) return centerY + 1;
+	int centerY = areaHeight / 2;
+    if (laneIndex == 0) return 5;
+    if (laneIndex == 1) return 13;
     return centerY;
 }
 

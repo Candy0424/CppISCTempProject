@@ -4,9 +4,9 @@ Player* Player::instance = nullptr;
 
 void Player::InitPlayer(int life)
 {
-	upperNode.position.SetpositionXY(20, 8);
+	upperNode.position.SetpositionXY(10, 5);
 
-	downperNode.position.SetpositionXY(20, 18);
+	downperNode.position.SetpositionXY(10, 13);
 
 	upperNode.tileState = Tile::INPUT_NODE;
 	downperNode.tileState = Tile::INPUT_NODE;
