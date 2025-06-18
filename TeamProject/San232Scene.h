@@ -10,7 +10,4 @@ public:
     void Update() override;
     void Render() override;
 private:
-    float currentTime;
-    int width, height;
-    bool judgeState[2];
 };
