@@ -1,8 +1,7 @@
 ﻿#include "TitleScene.h"
-#include <windows.h>
-#include <conio.h>
-#include <iostream>
-#include "Enums.h"
+#include <Windows.h>
+#include <io.h>
+#include <fcntl.h>
 
 static const wchar_t* TITLE[] = {
     L"████████╗██╗   ██╗██████╗ ███████╗    ███████╗ ██████╗ ███╗   ███╗███████╗████████╗██╗  ██╗██╗███╗   ██╗ ██████╗     ",
@@ -12,62 +11,88 @@ static const wchar_t* TITLE[] = {
     L"   ██║      ██║   ██║     ███████╗    ███████║╚██████╔╝██║ ╚═╝ ██║███████╗   ██║   ██║  ██║██║██║ ╚████║╚██████╔╝    ",
     L"   ╚═╝      ╚═╝   ╚═╝     ╚══════╝    ╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝     ",
 };
-static const wchar_t* BUTTONS[] = {
-    L"게임시작",
-    L"게임설정",
-    L"나가기",
-};
+static const wchar_t* MENUS[] = { L"게임 시작", L"게임 설정", L"나가기" };
 
 TitleScene::TitleScene()
-    : selectedIdx(0), topBarOffset(0), botBarOffset(0), barLen(90), barMoveDir(1),
-    upPrev(false), downPrev(false), enterPrev(false), nextScene((int)Scene::TITLE) {}
+    : titleScrollX(0), scrollBarWidth(100), selectedIdx(0),
+    upPrev(false), downPrev(false), enterPrev(false)
+{
+    for (auto line : TITLE)
+        titleLines.push_back(line);
+    menuYStart = 20;
+}
 
 TitleScene::~TitleScene() {}
 
 void TitleScene::Init() {}
 
-void TitleScene::Update() {
+void TitleScene::Update(Scene& curScene)
+{
+    // 입력(비동기)
     bool up = (GetAsyncKeyState(VK_UP) & 0x8000) != 0;
     bool down = (GetAsyncKeyState(VK_DOWN) & 0x8000) != 0;
     bool enter = (GetAsyncKeyState(VK_RETURN) & 0x8000) != 0;
 
-    if (up && !upPrev) selectedIdx = (selectedIdx + 2) % 3;
+    if (up && !upPrev)   selectedIdx = (selectedIdx + 2) % 3;
     if (down && !downPrev) selectedIdx = (selectedIdx + 1) % 3;
 
     if (enter && !enterPrev) {
-        if (selectedIdx == 0) nextScene = (int)Scene::GAME;
-        //else if (selectedIdx == 1) nextScene = (int)Scene::SETTING;
-        //else if (selectedIdx == 2) nextScene = (int)Scene::EXIT;
+        if (selectedIdx == 0) curScene = Scene::GAME;
+        else if (selectedIdx == 1) curScene = Scene::END;
+        else if (selectedIdx == 2) curScene = Scene::QUIT;
     }
+    upPrev = up; downPrev = down; enterPrev = enter;
 
-    upPrev = up;
-    downPrev = down;
-    enterPrev = enter;
-
-    topBarOffset = (topBarOffset + 1) % (barLen + 20);
-    botBarOffset = (botBarOffset - 1 + barLen + 20) % (barLen + 20);
+    titleScrollX = (titleScrollX + 2) % (int)titleLines[0].size();
 }
 
-void TitleScene::Render() {
-    system("cls");
-    int width = barLen;
+void TitleScene::Render()
+{
+    Gotoxy(0, 0);
+    int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
 
-    for (int i = 0; i < width; ++i)
-        std::wcout << ((i + topBarOffset) % 8 < 4 ? L'=' : L' ');
-    std::wcout << std::endl;
+    RenderScrollBars();
+    RenderAsciiTitle();
+    RenderMenu();
 
-    for (auto line : TITLE) std::wcout << line << std::endl;
+    _setmode(_fileno(stdout), prevmode);
+}
 
-    std::wcout << std::endl << std::endl;
+void TitleScene::RenderAsciiTitle()
+{
+    int winW = 100;
+    int winH = (int)titleLines.size();
+
+    for (int row = 0; row < winH; ++row) {
+        Gotoxy(0, row + 2);
+        std::wstring& line = titleLines[row];
+        int n = (int)line.size();
+        for (int col = 0; col < winW; ++col) {
+            int idx = (titleScrollX + col) % n;
+            wcout << line[idx];
+        }
+    }
+}
+
+void TitleScene::RenderMenu()
+{
+    int x = 37, y = menuYStart;
     for (int i = 0; i < 3; ++i) {
-        if (selectedIdx == i) std::wcout << L"> ";
-        else std::wcout << L"  ";
-        std::wcout << BUTTONS[i] << std::endl;
+        Gotoxy(x, y + i * 2);
+        if (selectedIdx == i) wcout << L">  " << MENUS[i];
+        else wcout << L"  " << MENUS[i];
     }
-
-    for (int i = 0; i < width; ++i)
-        std::wcout << ((i + botBarOffset) % 8 < 4 ? L'=' : L' ');
-    std::wcout << std::endl;
 }
 
-int TitleScene::GetNextScene() const { return nextScene; }
+void TitleScene::RenderScrollBars()
+{
+    // 상단 바 (왼->오)
+    Gotoxy(0, 0);
+    for (int i = 0; i < scrollBarWidth; ++i)
+        wcout << (((i + titleScrollX) % 10 < 5) ? L'=' : L' ');
+
+    // 하단 바 (오->왼)
+    Gotoxy(0, menuYStart + 8);
+    for (int i = 0; i < scrollBarWidth; ++i)
+        wcout << (((i - titleScrollX + 100) % 10 < 5) ? L'=' : L' ');
+}
