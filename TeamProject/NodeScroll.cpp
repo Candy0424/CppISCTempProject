@@ -26,8 +26,8 @@ void NodeManager::DestroyInstance() {
 NodeManager::NodeManager(int playAreaWidth, int playAreaHeight, int maxNodeCount)
     : areaWidth(playAreaWidth), areaHeight(playAreaHeight), laneCount(2)
 {
-    int centerX = areaWidth / 2;
-    judgeLineX = centerX - 20;
+    //int centerX = areaWidth / 2;
+    judgeLineX = 10;
     startX = areaWidth - 2;
     nodePool.resize(maxNodeCount);
     mapBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
@@ -112,22 +112,25 @@ void NodeManager::Render(const bool judgeState[2]) {
             }
         }
     }
-    int y0 = LaneToY(0), y1 = LaneToY(1);
-    int msgY0 = std::max(0, y0 - 2 - (int)judgeMsgs[0].size());
+
+    int msgBaseY = LaneToY(0) - 2;
+    int msgBaseX0 = judgeLineX + 4;
+    int msgBaseX1 = judgeLineX + 4;
+
     for (size_t i = 0; i < judgeMsgs[0].size(); ++i) {
         if (judgeMsgs[0][i].frameLeft > 0) {
-            Gotoxy(judgeLineX + 3, msgY0 + (int)i);
+            Gotoxy(msgBaseX0, msgBaseY - (int)i);
             PrintJudgeResult(judgeMsgs[0][i].result);
         }
     }
-    int msgY1 = y1 + 2;
     for (size_t i = 0; i < judgeMsgs[1].size(); ++i) {
         if (judgeMsgs[1][i].frameLeft > 0) {
-            Gotoxy(judgeLineX + 3, msgY1 + (int)i);
+            Gotoxy(msgBaseX1, msgBaseY - (int)i);
             PrintJudgeResult(judgeMsgs[1][i].result);
         }
     }
 }
+
 
 Node* NodeManager::GetNearestJudgeableNode(int lane, int judgeRange) {
     Node* best = nullptr;
@@ -159,10 +162,9 @@ void NodeManager::HitNode(Node* node) {
 }
 
 int NodeManager::LaneToY(int laneIndex) const {
-	int centerY = areaHeight / 2;
-    if (laneIndex == 0) return 5;
-    if (laneIndex == 1) return 13;
-    return centerY;
+    if (laneIndex == 0) return 10;
+    if (laneIndex == 1) return 15;
+    return areaHeight / 2;
 }
 
 void NodeManager::RegisterJudgeMsg(int lane, JudgeResult res, int duration) {
