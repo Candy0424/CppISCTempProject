@@ -29,7 +29,6 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="NodeScroll.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="San232Scene.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
@@ -43,7 +42,6 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeScroll.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="San232Scene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
