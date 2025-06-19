@@ -23,8 +23,8 @@ void Core::Run()
 
 Core::Core()
 {
-    SetConsoleFont(L"Consolas", { 6, 12 }, FW_NORMAL);
-    SetConsoleSettings(800, 500, false, L"Type Something");
+    SetConsoleFont(L"Consolas", { 8, 14 }, FW_NORMAL);
+    SetConsoleSettings(740, 500, false, L"Type Something");
     SetLockResize();
     currentScene = Scene::TITLE;
     prevScene = Scene::TITLE;
