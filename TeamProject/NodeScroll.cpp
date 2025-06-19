@@ -5,7 +5,23 @@
 #undef max
 #undef min
 #include <algorithm>
-#include "Enums.h"
+
+
+
+NodeManager* NodeManager::instance = nullptr;
+
+NodeManager* NodeManager::GetInstance(int width, int height, int maxNodeCount) {
+    if (!instance)
+        instance = new NodeManager(width, height, maxNodeCount);
+    return instance;
+}
+
+void NodeManager::DestroyInstance() {
+    if (instance) {
+        delete instance;
+        instance = nullptr;
+    }
+}
 
 NodeManager::NodeManager(int playAreaWidth, int playAreaHeight, int maxNodeCount)
     : areaWidth(playAreaWidth), areaHeight(playAreaHeight), laneCount(2)
