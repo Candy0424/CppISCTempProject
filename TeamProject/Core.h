@@ -1,6 +1,5 @@
 #pragma once
 #include "Scene.h"
-#include "San232Scene.h"
 #include "Console.h"
 #include "NodeScroll.h"
 #include "InputManager.h"
