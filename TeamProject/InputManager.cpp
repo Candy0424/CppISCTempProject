@@ -2,8 +2,16 @@
 #include <Windows.h>
 #include "NodeScroll.h"
 
+InputManager* InputManager::instance = nullptr;
 InputManager::InputManager() {}
 
+InputManager* InputManager::GetInstance() {
+    if (!instance) instance = new InputManager();
+    return instance;
+}
+void InputManager::DestroyInstance() {
+    if (instance) { delete instance; instance = nullptr; }
+}
 
 void InputManager::Update(bool judgeState[2], Player* player) 
 {
@@ -18,7 +26,7 @@ void InputManager::Update(bool judgeState[2], Player* player)
             }
         }
     }*/
-	NodeManager* nodeManager = new NodeManager();
+	NodeManager* nodeManager = NodeManager::GetInstance();
 
     if ((GetAsyncKeyState('D') & 0x8000) || (GetAsyncKeyState('F') & 0x8000))
     {
