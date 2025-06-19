@@ -13,8 +13,8 @@ Core::Core() : currentTime(0.0f), scene(nullptr)
 
 Core::~Core()
 {
-    NodeManager::DestroyInstance();
-    InputManager::DestroyInstance();
+    //NodeManager::DestroyInstance();
+    //InputManager::DestroyInstance();
     delete scene;
 }
 
@@ -39,7 +39,7 @@ void Core::Init()
     COORD res = GetConsoleResolution();
     width = res.X;
     height = res.Y;
-    NodeManager::GetInstance(width, height, 32)->LoadChart("Chart.txt");
+    //NodeManager::GetInstance(width, height, 32)->LoadChart("Chart.txt");
     SetCursorVisual(false, 1);
     currentTime = 0.0f;
 
@@ -52,8 +52,8 @@ void Core::Init()
 void Core::Update()
 {
     currentTime += 0.016f;
-    InputManager::GetInstance()->Update(judgeState, player);
-    NodeManager::GetInstance()->Update(currentTime);
+    //InputManager::GetInstance()->Update(judgeState, player);
+    //NodeManager::GetInstance()->Update(currentTime);
     if (scene) scene->Update();
 
 	gameScene.Update(player);
@@ -61,7 +61,7 @@ void Core::Update()
 
 void Core::Render()
 {
-    NodeManager::GetInstance()->Render(judgeState);
+    //NodeManager::GetInstance()->Render(judgeState);
     judgeState[0] = judgeState[1] = false;
     if (scene) scene->Render();
 
