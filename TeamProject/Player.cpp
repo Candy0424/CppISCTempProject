@@ -2,11 +2,13 @@
 
 Player* Player::instance = nullptr;
 
+Player::Player() { }
+
 void Player::InitPlayer(int life)
 {
-	upperNode.position.SetpositionXY(10, 5);
+	upperNode.position.SetpositionXY(10, 10);
 
-	downperNode.position.SetpositionXY(10, 13);
+	downperNode.position.SetpositionXY(10, 15);
 
 	upperNode.tileState = Tile::INPUT_NODE;
 	downperNode.tileState = Tile::INPUT_NODE;

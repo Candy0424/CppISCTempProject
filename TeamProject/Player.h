@@ -30,16 +30,6 @@ typedef struct _playerNode
 
 class Player
 {
-private:
-	PlayerNode upperNode;
-	PlayerNode downperNode;
-
-	PPlayerNode upperNodePtr = &upperNode;
-	PPlayerNode downperNodePtr = &downperNode;
-
-	int life;
-	bool isDie;
-	Player() {};
 public:
 	static Player* GetInstance()
 	{
@@ -59,6 +49,15 @@ public:
 	PlayerNode* GetNode(int number); // 1일때는 upper 2일때는 downper Node를 반환하는 함수
 
 private:
+	PlayerNode upperNode;
+	PlayerNode downperNode;
+
+	PPlayerNode upperNodePtr = &upperNode;
+	PPlayerNode downperNodePtr = &downperNode;
+
+	int life;
+	bool isDie;
+	Player();
 	static Player* instance;
 };
 
