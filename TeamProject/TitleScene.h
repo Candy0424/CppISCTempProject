@@ -1,22 +1,29 @@
 #pragma once
-#include "San232Scene.h"
+#include "Enums.h"
+#include "Console.h"
+#include <vector>
+#include <string>
 
 class TitleScene
 {
 public:
     TitleScene();
     ~TitleScene();
+
     void Init();
-    void Update();
+    void Update(Scene& curScene);
     void Render();
-    int GetNextScene() const;
 
 private:
+    void RenderAsciiTitle();
+    void RenderMenu();
+    void RenderScrollBars();
+
+    std::vector<std::wstring> titleLines;
+    int titleScrollX;
+    int scrollBarWidth;
+
     int selectedIdx;
-    int topBarOffset;
-    int botBarOffset;
-    int barLen;
-    int barMoveDir;
+    int menuYStart;
     bool upPrev, downPrev, enterPrev;
-    int nextScene;
 };

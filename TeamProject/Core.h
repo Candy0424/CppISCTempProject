@@ -5,6 +5,7 @@
 #include "NodeScroll.h"
 #include "InputManager.h"
 #include "GameScene.h"
+#include "TitleScene.h"
 class Core
 {
 public:
@@ -15,10 +16,12 @@ private:
     void Init();
     void Update();
     void Render();
-    SceneScript* scene;
     bool judgeState[2];
     float currentTime;
     int width, height;
+    TitleScene titleScene;
     GameScene gameScene;
+    Scene currentScene;
+    Scene prevScene;
     Player* player;
 };

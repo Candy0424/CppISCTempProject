@@ -1,30 +1,49 @@
 #include "GameScene.h"
 #include "Enums.h"
 #include "Console.h"
+#include "NodeScroll.h"
+#include "InputManager.h"
+#include <iostream>
 
+GameScene::GameScene()
+    : width(0), height(0), currentTime(0.0f)
+{
+    judgeState[0] = judgeState[1] = false;
+}
 
 void GameScene::Init(Player* player)
 {
+    system("cls");
+    COORD res = GetConsoleResolution();
+    width = res.X;
+    height = res.Y;
+    NodeManager::GetInstance(width, height, 32)->LoadChart("Chart.txt");
+    SetCursorVisual(false, 1);
+    currentTime = 0.0f;
+    judgeState[0] = judgeState[1] = false;
 }
 
 void GameScene::Update(Player* player)
 {
+    currentTime += 0.016f;
+    InputManager::GetInstance()->Update(judgeState, player);
+    NodeManager::GetInstance()->Update(currentTime);
 }
 
 void GameScene::Render(Player* player)
 {
-	PPlayerNode upperNode = player->GetNode(1);
-	PPlayerNode downperNode = player->GetNode(2);
+    Gotoxy(0, 0);
+    NodeManager::GetInstance()->Render(judgeState);
 
-	int upperX = upperNode->position.x;
-	int upperY = upperNode->position.y;
+    auto upperNode = player->GetNode(1);
+    auto downperNode = player->GetNode(2);
 
-	int downperX = downperNode->position.x;
-	int downperY = downperNode->position.y;
+    IsGotoxy(upperNode->position.x, upperNode->position.y);
+    std::cout << (upperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
 
-	IsGotoxy(upperX, upperY);
-	cout << ((upperNode->tileState == Tile::OUTPUT_NODE) ? "●" : "○"); // 상단 노드 표시
+    IsGotoxy(downperNode->position.x, downperNode->position.y);
+    std::cout << (downperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
 
-	IsGotoxy(downperX, downperY);
-	cout << ((downperNode->tileState == Tile::OUTPUT_NODE) ? "●" : "○"); // 상단 노드 표시; // 하단 노드 표시
+    judgeState[0] = judgeState[1] = false;
+    SetCursorVisual(false, 1);
 }
