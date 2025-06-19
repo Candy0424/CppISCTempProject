@@ -84,7 +84,7 @@ void NodeManager::Update(float currentTime) {
 void NodeManager::FillMapBuffer(const bool judgeState[2]) {
     for (auto& row : mapBuffer) std::fill(row.begin(), row.end(), Tile::SPACE);
     for (int l = 0; l < laneCount; ++l)
-        mapBuffer[LaneToY(l)][judgeLineX] = judgeState[l] ? Tile::INPUT_NODE : Tile::ROAD;
+        mapBuffer[LaneToY(l)][judgeLineX] = Tile::ROAD;
     for (const auto& node : nodePool) {
         if (node.active && node.x >= 0 && node.x < areaWidth && node.y >= 0 && node.y < areaHeight)
             mapBuffer[node.y][node.x] = Tile::NODE;
