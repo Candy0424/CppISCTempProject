@@ -2,16 +2,8 @@
 #include <Windows.h>
 #include "NodeScroll.h"
 
-InputManager* InputManager::instance = nullptr;
 InputManager::InputManager() {}
 
-InputManager* InputManager::GetInstance() {
-    if (!instance) instance = new InputManager();
-    return instance;
-}
-void InputManager::DestroyInstance() {
-    if (instance) { delete instance; instance = nullptr; }
-}
 
 void InputManager::Update(bool judgeState[2], Player* player) 
 {
@@ -26,7 +18,7 @@ void InputManager::Update(bool judgeState[2], Player* player)
             }
         }
     }*/
-    NodeManager nodeManager;
+	NodeManager* nodeManager = new NodeManager();
 
     if ((GetAsyncKeyState('D') & 0x8000) || (GetAsyncKeyState('F') & 0x8000))
     {
@@ -39,9 +31,9 @@ void InputManager::Update(bool judgeState[2], Player* player)
 	    player->GetNode(1)->tileState = Tile::INPUT_NODE; // 상단 노드 상태 변경
     }
 
-    JudgeResult jr1 = nodeManager.Judge(1); // 상단 노드 판정
+    JudgeResult jr1 = nodeManager->Judge(1); // 상단 노드 판정
     if (jr1 == JudgeResult::PERFECT || jr1 == JudgeResult::GOOD)
-        nodeManager.RegisterJudgeMsg(1, jr1, 30);
+        nodeManager->RegisterJudgeMsg(1, jr1, 30);
 
     if ((GetAsyncKeyState('J') & 0x8000) || (GetAsyncKeyState('K') & 0x8000))
     {
@@ -53,8 +45,8 @@ void InputManager::Update(bool judgeState[2], Player* player)
 		judgeState[1] = false; // 하단 노드 판정
 		player->GetNode(2)->tileState = Tile::INPUT_NODE; // 하단 노드 상태 변경
     }
-    JudgeResult jr2 = nodeManager.Judge(2); // 상단 노드 판정
+    JudgeResult jr2 = nodeManager->Judge(2); // 상단 노드 판정
     if (jr2 == JudgeResult::PERFECT || jr2 == JudgeResult::GOOD)
-        nodeManager.RegisterJudgeMsg(2, jr2, 30);
+        nodeManager->RegisterJudgeMsg(2, jr2, 30);
 
 }
