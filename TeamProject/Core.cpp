@@ -12,8 +12,9 @@ Core::~Core()
 
 void Core::Run()
 {
+    isRunning = true;
     Init();
-    while (true)
+    while (isRunning)
     {
         Update();
         Render();
@@ -68,7 +69,10 @@ void Core::Update()
         case Scene::SETTING:
             break;
         case Scene::QUIT:
+        {
+            isRunning = false;
             break;
+        }
         case Scene::END:
             break;
         default:

@@ -16,6 +16,7 @@ private:
     void Update();
     void Render();
     bool judgeState[2];
+    bool isRunning;
     float currentTime;
     int width, height;
     TitleScene titleScene;
