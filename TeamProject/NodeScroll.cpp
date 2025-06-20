@@ -114,8 +114,8 @@ void NodeManager::Render(const bool judgeState[2]) {
     }
 
     int msgBaseY = LaneToY(0) - 2;
-    int msgBaseX0 = judgeLineX + 4;
-    int msgBaseX1 = judgeLineX + 4;
+    int msgBaseX0 = judgeLineX + 13;
+    int msgBaseX1 = judgeLineX + 13;
 
     for (size_t i = 0; i < judgeMsgs[0].size(); ++i) {
         if (judgeMsgs[0][i].frameLeft > 0) {
@@ -150,12 +150,18 @@ JudgeResult NodeManager::Judge(int lane) {
     Node* node = GetNearestJudgeableNode(lane, 2);
     if (node) {
         int diff = std::abs(node->x - judgeLineX);
-        HitNode(node);
-        if (diff <= 1) return JudgeResult::PERFECT;
-        if (diff == 2) return JudgeResult::GOOD;
+        if (diff <= 1) {
+            HitNode(node);
+            return JudgeResult::PERFECT;
+        }
+        if (diff == 2) {
+            HitNode(node);
+            return JudgeResult::GOOD;
+        }
     }
     return JudgeResult::NONE;
 }
+
 
 void NodeManager::HitNode(Node* node) {
     if (node) node->isHit = true;
