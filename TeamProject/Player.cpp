@@ -29,3 +29,8 @@ PlayerNode* Player::GetNode(int number)
 		return nullptr; // 존재하는 노드가 없음.
 	}
 }
+
+void Player::SetPosition(int& x, int& y)
+{
+	position.SetpositionXY(x, y);
+}

@@ -31,6 +31,8 @@ typedef struct _playerNode
 class Player
 {
 public:
+	POS position;
+
 	static Player* GetInstance()
 	{
 		if (instance == nullptr)
@@ -47,6 +49,8 @@ public:
 	void InitPlayer(int life);
 
 	PlayerNode* GetNode(int number); // 1일때는 upper 2일때는 downper Node를 반환하는 함수
+
+	void SetPosition(int& x, int& y);
 
 private:
 	PlayerNode upperNode;
