@@ -1,5 +1,7 @@
-#include "GameScene.h"
+ï»¿#include "GameScene.h"
 #include "Console.h"
+#include <fcntl.h>
+#include <io.h>
 
 GameScene::GameScene()
     : width(0), height(0), currentTime(0.0f),
@@ -33,7 +35,7 @@ void GameScene::Update(Player* player)
             nodeRenderer.RegisterJudgeMsg(lane, jr, 30);
         });
 
-    // ÀÔ·ÂÀÌ ÇØÁ¦µÈ °æ¿ì, Player ³ëµå »óÅÂ º¹±Í
+    // ìž…ë ¥ì´ í•´ì œëœ ê²½ìš°, Player ë…¸ë“œ ìƒíƒœ ë³µê·€
     if (!judgeState[0]) player->GetNode(1)->tileState = Tile::INPUT_NODE;
     if (!judgeState[1]) player->GetNode(2)->tileState = Tile::INPUT_NODE;
 
@@ -44,15 +46,20 @@ void GameScene::Render(Player* player)
 {
     nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeRenderer.GetJudgeMsgs(), nodeManager.GetJudgeLineX());
 
-    // ÇÃ·¹ÀÌ¾îÀÇ upper, downper ³ëµå Ãâ·Â
+    // í”Œë ˆì´ì–´ì˜ upper, downper ë…¸ë“œ ì¶œë ¥
     auto upperNode = player->GetNode(1);
     auto downperNode = player->GetNode(2);
 
     IsGotoxy(upperNode->position.x, upperNode->position.y);
-    std::cout << (upperNode->tileState == Tile::OUTPUT_NODE ? "¡Ü" : "¡Û");
+    std::cout << (upperNode->tileState == Tile::OUTPUT_NODE ? "â—" : "â—‹");
 
     IsGotoxy(downperNode->position.x, downperNode->position.y);
-    std::cout << (downperNode->tileState == Tile::OUTPUT_NODE ? "¡Ü" : "¡Û");
+    std::cout << (downperNode->tileState == Tile::OUTPUT_NODE ? "â—" : "â—‹");
+
+	IsGotoxy(player->position.x, player->position.y);
+    int previous = _setmode(_fileno(stdout), _O_U8TEXT);
+    std::wcout << L"ðŸŽ¤";
+	_setmode(_fileno(stdout), previous);
 
     judgeState[0] = judgeState[1] = false;
     SetCursorVisual(false, 1);
