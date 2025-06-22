@@ -8,6 +8,7 @@ struct Node
     int x, y;
     bool isHit;
     int prevX, prevY;
+    bool prevActive;
 
     Node();
 

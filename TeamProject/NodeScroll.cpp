@@ -61,11 +61,11 @@ JudgeResult NodeManager::Judge(int lane)
     Node* node = GetNearestJudgeableNode(lane, 2);
     if (node) {
         int diff = std::abs(node->x - judgeLineX);
-        if (diff <= 1) {
+        if (diff <= 0) {
             HitNode(node);
             return JudgeResult::PERFECT;
         }
-        if (diff == 2) {
+        if (diff <= 2) {
             HitNode(node);
             return JudgeResult::GOOD;
         }

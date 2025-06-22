@@ -71,26 +71,31 @@ void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[
         for (int x = 0; x < areaWidth; ++x) {
             switch (mapBuffer[y][x]) {
             case Tile::NODE: std::cout << "●"; break;
-            case Tile::ROAD: std::cout << "━"; break;
+            case Tile::ROAD: std::cout << " "; break;
             case Tile::SPACE: std::cout << " "; break;
             default: std::cout << " "; break;
             }
         }
     }
 
-    int msgBaseY = nodeManager.LaneToY(0) - 2; // 판정 메시지도 판정라인 기준
-    int msgBaseX0 = judgeLineX + 13;
-    int msgBaseX1 = judgeLineX + 13;
-    for (size_t i = 0; i < judgeMsgs[0].size(); ++i) {
-        if (judgeMsgs[0][i].frameLeft > 0) {
-            PrintJudgeResult(judgeMsgs[0][i].result, msgBaseX0, msgBaseY - (int)i);
+    JudgeResult latestResult = JudgeResult::NONE;
+
+    for (int lane = 0; lane < 2; ++lane) {
+        for (auto it = judgeMsgs[lane].rbegin(); it != judgeMsgs[lane].rend(); ++it) {
+            if (it->frameLeft > 0) {
+                latestResult = it->result;
+                break;
+            }
         }
     }
-    for (size_t i = 0; i < judgeMsgs[1].size(); ++i) {
-        if (judgeMsgs[1][i].frameLeft > 0) {
-            PrintJudgeResult(judgeMsgs[1][i].result, msgBaseX1, msgBaseY - (int)i);
-        }
-    }
+
+    int msgBaseY = nodeManager.LaneToY(0) - 2;
+    int msgBaseX = judgeLineX + 13;
+
+    if (latestResult != JudgeResult::NONE)
+        PrintJudgeResult(latestResult, msgBaseX, msgBaseY);
+    else
+        PrintJudgeResult(JudgeResult::NONE, msgBaseX, msgBaseY);
 }
 
 void NodeRenderer::RegisterJudgeMsg(int lane, JudgeResult res, int duration)

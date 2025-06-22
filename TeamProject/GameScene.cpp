@@ -36,11 +36,18 @@ void GameScene::Update(Player* player)
             nodeRenderer.RegisterJudgeMsg(lane, jr, 30);
         });
 
-    // 입력이 해제된 경우, Player 노드 상태 복귀
     if (!judgeState[0]) player->GetNode(1)->tileState = Tile::INPUT_NODE;
     if (!judgeState[1]) player->GetNode(2)->tileState = Tile::INPUT_NODE;
 
     nodeManager.Update(currentTime);
+
+    auto& nodes = const_cast<std::vector<Node>&>(nodeManager.GetNodes());
+    for (auto& node : nodes) {
+        if (!node.active && node.prevActive && !node.isHit) {
+            nodeRenderer.RegisterJudgeMsg(node.lane, JudgeResult::MISS, 30);
+            node.prevActive = false;
+        }
+    }
 }
 
 void GameScene::Render(Player* player)
