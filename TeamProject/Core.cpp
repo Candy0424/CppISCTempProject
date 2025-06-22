@@ -6,7 +6,6 @@
 
 Core::~Core()
 {
-    NodeManager::DestroyInstance();
     InputManager::DestroyInstance();
 }
 
