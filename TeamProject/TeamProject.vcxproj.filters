@@ -58,11 +58,11 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>02. Manager</Filter>
     </ClCompile>
-    <ClCompile Include="San232Scene.cpp">
-      <Filter>04. Scene</Filter>
-    </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>04. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeRender.cpp">
+      <Filter>02. Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -96,13 +96,13 @@
     <ClInclude Include="Scene.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
-    <ClInclude Include="San232Scene.h">
-      <Filter>99. Headers</Filter>
-    </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeRenderer.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
   </ItemGroup>
