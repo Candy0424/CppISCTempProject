@@ -47,10 +47,10 @@ public:
 	}
 
 	void InitPlayer(int life);
+	void SetPosition(int x, int y);
 
 	PlayerNode* GetNode(int number); // 1일때는 upper 2일때는 downper Node를 반환하는 함수
 
-	void SetPosition(int& x, int& y);
 
 private:
 	PlayerNode upperNode;
