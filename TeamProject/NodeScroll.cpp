@@ -100,7 +100,7 @@ int NodeManager::LaneToY(int laneIndex) const
         if (laneIndex == 0) return playerPtr->GetNode(1)->position.y;
         if (laneIndex == 1) return playerPtr->GetNode(2)->position.y;
     }
-    return (laneIndex == 0 ? 10 : 15);
+    return (laneIndex == 0 ? 25 : 30);
 }
 int NodeManager::GetJudgeLineX() const { return judgeLineX; }
 int NodeManager::GetAreaWidth() const { return areaWidth; }

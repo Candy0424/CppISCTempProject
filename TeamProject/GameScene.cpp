@@ -5,7 +5,7 @@
 
 GameScene::GameScene()
     : width(0), height(0), currentTime(0.0f),
-    nodeManager(100, 20, 32), nodeRenderer(100, 20, 2) {}
+    nodeManager(100, 31, 32), nodeRenderer(100, 31, 2) {}
 
 void GameScene::Init(Player* player)
 {
@@ -13,6 +13,7 @@ void GameScene::Init(Player* player)
     COORD res = GetConsoleResolution();
     width = res.X;
     height = res.Y;
+    nodeManager.Init(player);
     nodeManager.LoadChart("Chart.txt");
     SetCursorVisual(false, 1);
     currentTime = 0.0f;
@@ -44,7 +45,7 @@ void GameScene::Update(Player* player)
 
 void GameScene::Render(Player* player)
 {
-    nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeRenderer.GetJudgeMsgs(), nodeManager.GetJudgeLineX());
+    nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeRenderer.GetJudgeMsgs(), nodeManager.GetJudgeLineX(), nodeManager);
 
     // 플레이어의 upper, downper 노드 출력
     auto upperNode = player->GetNode(1);

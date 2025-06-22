@@ -2,6 +2,7 @@
 #include <vector>
 #include "Enums.h"
 #include "Node.h"
+#include "NodeScroll.h" // NodeManager Æ÷ÇÔ
 
 struct JudgeMsg {
     JudgeResult result;
@@ -11,8 +12,8 @@ struct JudgeMsg {
 class NodeRenderer {
 public:
     NodeRenderer(int areaWidth, int areaHeight, int laneCount);
-    void Render(const std::vector<Node>& nodes, const bool judgeState[2], const std::vector<JudgeMsg> judgeMsgs[2], int judgeLineX);
-    void FillMapBuffer(const std::vector<Node>& nodes, int areaWidth, int areaHeight, int laneCount, int judgeLineX);
+    void Render(const std::vector<Node>& nodes, const bool judgeState[2], const std::vector<JudgeMsg> judgeMsgs[2], int judgeLineX, const NodeManager& nodeManager);
+    void FillMapBuffer(const std::vector<Node>& nodes, int areaWidth, int areaHeight, int laneCount, int judgeLineX, const NodeManager& nodeManager);
     void RegisterJudgeMsg(int lane, JudgeResult res, int duration = 30);
     const std::vector<JudgeMsg>* GetJudgeMsgs() const;
 private:
