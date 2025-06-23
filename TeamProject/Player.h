@@ -50,6 +50,8 @@ public:
 	void SetPosition(int x, int y);
 	void PlayerHit(int damage);
 	void PlayerHeal(int heal);
+	int GetCurrentLife() const { return currentLife; }
+	int GetMaxLife() const { return maxLife; }
 
 	PlayerNode* GetNode(int number); // 1일때는 upper 2일때는 downper Node를 반환하는 함수
 	
