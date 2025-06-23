@@ -18,5 +18,5 @@ enum class Tile
 
 enum class JudgeResult
 {
-	NONE, PERFECT, GOOD, MISS
+	NONE, PERFECT, GOOD, BAD, MISS
 };

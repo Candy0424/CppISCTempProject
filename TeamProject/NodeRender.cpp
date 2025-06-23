@@ -1,4 +1,4 @@
-#include "NodeRenderer.h"
+ï»¿#include "NodeRenderer.h"
 #include "Console.h"
 #include <iostream>
 #include <algorithm>
@@ -54,9 +54,14 @@ static void PrintJudgeResult(JudgeResult r, int x, int y) {
         std::cout << "GOOD!";
         SetColor(COLOR::WHITE);
         break;
+    case JudgeResult::BAD:
+        SetColor(COLOR::GRAY);
+        std::cout << "BAD...";
+        SetColor(COLOR::WHITE);
+        break;
     case JudgeResult::MISS:
         SetColor(COLOR::RED);
-        std::cout << "MISS!";
+        std::cout << "MISS";
         SetColor(COLOR::WHITE);
         break;
     default:
@@ -71,7 +76,7 @@ void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[
         Gotoxy(0, y);
         for (int x = 0; x < areaWidth; ++x) {
             switch (mapBuffer[y][x]) {
-            case Tile::NODE: std::cout << "¡Ü"; break;
+            case Tile::NODE: std::cout << "â™«"; break;
             case Tile::ROAD: std::cout << " "; break;
             case Tile::SPACE: std::cout << " "; break;
             default: std::cout << " "; break;

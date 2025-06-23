@@ -40,7 +40,7 @@ void SongSelectScene::Render()
     {
         Gotoxy(20, y + i * 2);
         if (selectedIdx == (int)i)
-            wcout << L"> " << g_songTable[i].title;
+            wcout << L">  " << g_songTable[i].title;
         else
             wcout << L"  " << g_songTable[i].title;
     }
