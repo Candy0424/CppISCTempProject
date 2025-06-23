@@ -9,7 +9,8 @@ NodeManager::NodeManager(int areaWidth, int areaHeight, int maxNodeCount, int no
     judgeLineX = 10;
     startX = areaWidth - 2;
     nodePool.resize(maxNodeCount);
-    moveDuration = static_cast<float>(startX - judgeLineX) / static_cast<float>(nodeSpeed) / 60.0f;
+    moveDuration = float(startX - judgeLineX) / float(nodeSpeed) / 60;
+
 }
 
 void NodeManager::Init(Player* player)

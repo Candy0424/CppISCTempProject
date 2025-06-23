@@ -32,6 +32,9 @@
     <ClInclude Include="NodeScroll.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SongInfo.h" />
+    <ClInclude Include="SongSelectScene.h" />
+    <ClInclude Include="SongTable.h" />
     <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -46,10 +49,17 @@
     <ClCompile Include="NodeRender.cpp" />
     <ClCompile Include="NodeScroll.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SongSelectScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Chart.txt" />
+    <Media Include="Sound\Abel &amp; Inu.mp3" />
+    <Media Include="Sound\Electric Joy Ride.mp3" />
+    <Media Include="Sound\Freedom Dive.mp3" />
+    <Media Include="Sound\Ikazuchi.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Chart_Electric_Joy_Ride.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

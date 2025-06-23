@@ -5,24 +5,26 @@
 
 GameScene::GameScene()
     : width(0), height(0), currentTime(0.0f),
-    nodeManager(80, 31, 32, 2), nodeRenderer(80, 31, 2) // nodeSpeed = 2
+    nodeManager(80, 31, 32), nodeRenderer(80, 31, 2)
 {
     prevTime = clock();
 }
 
-void GameScene::Init(Player* player)
+void GameScene::Init(Player* player, SOUNDID songId)
 {
     system("cls");
+    curSongId = songId;
+    const SongInfo& info = g_songTable[static_cast<int>(songId)];
     COORD res = GetConsoleResolution();
     width = res.X;
     height = res.Y;
     nodeManager.Init(player);
-    nodeManager.LoadChart("Chart.txt");
+    nodeManager.LoadChart(info.chartPath);
+    PlaySoundID(songId, true);
     SetCursorVisual(false, 1);
     currentTime = 0.0f;
     judgeState[0] = judgeState[1] = false;
 }
-
 void GameScene::Update(Player* player)
 {
     clock_t now = clock();

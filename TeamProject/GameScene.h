@@ -3,12 +3,14 @@
 #include "NodeScroll.h"
 #include "NodeRenderer.h"
 #include "InputManager.h"
+#include "SongTable.h"
+#include "Mci.h"
 #include <chrono>
 
 class GameScene {
 public:
     GameScene();
-    void Init(Player* player);
+    void Init(Player* player, SOUNDID songId);
     void Update(Player* player);
     void Render(Player* player);
 private:
@@ -18,4 +20,5 @@ private:
     clock_t prevTime;
     NodeManager nodeManager;
     NodeRenderer nodeRenderer;
+    SOUNDID curSongId;
 };

@@ -10,7 +10,11 @@ void CloseMciDevice(UINT& _deviceId);
 
 enum class SOUNDID
 {
-    BGM, EXPLOSION, END
+    ELECTRIC_JOY_RIDE = 0,
+    DREAM_OF_MEMORIES,
+    IKAZUCHI,
+    FREEDOM_DIVE,
+    END
 };
 
 struct SoundEntry

@@ -37,8 +37,8 @@ void TitleScene::Update(Scene& curScene)
     if (down && !downPrev) selectedIdx = (selectedIdx + 1) % 3;
 
     if (enter && !enterPrev) {
-        if (selectedIdx == 0) curScene = Scene::GAME;
-        else if (selectedIdx == 1) curScene = Scene::END;
+        if (selectedIdx == 0) curScene = Scene::SONG_SELECT;
+        else if (selectedIdx == 1) curScene = Scene::SETTING;
         else if (selectedIdx == 2) curScene = Scene::QUIT;
     }
     upPrev = up; downPrev = down; enterPrev = enter;

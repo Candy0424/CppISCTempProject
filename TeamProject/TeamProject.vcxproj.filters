@@ -64,6 +64,10 @@
     <ClCompile Include="NodeRender.cpp">
       <Filter>02. Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Combo.cpp" />
+    <ClCompile Include="SongSelectScene.cpp">
+      <Filter>04. Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -105,9 +109,33 @@
     <ClInclude Include="NodeRenderer.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Combo.h" />
+    <ClInclude Include="SongInfo.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SongSelectScene.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SongTable.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Chart.txt">
+    <Media Include="Sound\Electric Joy Ride.mp3">
+      <Filter>05. Resource</Filter>
+    </Media>
+    <Media Include="Sound\Freedom Dive.mp3">
+      <Filter>05. Resource</Filter>
+    </Media>
+    <Media Include="Sound\Ikazuchi.mp3">
+      <Filter>05. Resource</Filter>
+    </Media>
+    <Media Include="Sound\Abel &amp; Inu.mp3">
+      <Filter>05. Resource</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Chart_Electric_Joy_Ride.txt">
       <Filter>05. Resource</Filter>
     </Text>
   </ItemGroup>

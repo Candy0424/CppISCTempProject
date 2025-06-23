@@ -1,25 +1,5 @@
 #include "Core.h"
 #include "Console.h"
-#include "NodeScroll.h"
-#include "InputManager.h"
-
-
-Core::~Core()
-{
-    InputManager::DestroyInstance();
-}
-
-void Core::Run()
-{
-    isRunning = true;
-    Init();
-    while (isRunning)
-    {
-        Update();
-        Render();
-        FrameSync(60);
-    }
-}
 
 Core::Core()
 {
@@ -29,76 +9,62 @@ Core::Core()
     currentScene = Scene::TITLE;
     prevScene = Scene::TITLE;
     player = Player::GetInstance();
-    player->InitPlayer(3); // Ã¼·Â 3
+    player->InitPlayer(3);
+    selectedSongId = SOUNDID::END;
+    InitAllSounds();
+}
+
+Core::~Core()
+{
+    Player::DestroyInstance();
+    ReleaseAllSounds();
+}
+
+void Core::Run()
+{
+    bool isRunning = true;
+    while (isRunning)
+    {
+        Update();
+        Render();
+        FrameSync(60);
+        if (currentScene == Scene::QUIT)
+            isRunning = false;
+    }
 }
 
 void Core::Init()
 {
     switch (currentScene)
     {
-    case Scene::TITLE:
-        titleScene.Init();
-        break;
-    case Scene::GAME:
-	    gameScene.Init(player);
-        break;
-    case Scene::SETTING:
-        break;
-    case Scene::QUIT:
-        break;
-    case Scene::END:
-        break;
-    default:
-        break;
+    case Scene::TITLE: titleScene.Init(); break;
+    case Scene::SONG_SELECT: songSelectScene.Init(); break;
+    case Scene::GAME: gameScene.Init(player, selectedSongId); break;
+    default: break;
     }
 }
 
 void Core::Update()
 {
     if (currentScene != prevScene)
-    {
-        switch (currentScene)
-        {
-        case Scene::TITLE:
-            titleScene.Init();
-            break;
-        case Scene::GAME:
-            gameScene.Init(player);
-            break;
-        case Scene::SETTING:
-            break;
-        case Scene::QUIT:
-        {
-            isRunning = false;
-            break;
-        }
-        case Scene::END:
-            break;
-        default:
-            break;
-        }
-    }
-    
+        Init();
     prevScene = currentScene;
-    
+
     switch (currentScene)
     {
     case Scene::TITLE:
         titleScene.Update(currentScene);
         break;
+    case Scene::SONG_SELECT:
+        songSelectScene.Update(currentScene, selectedSongId);
+        break;
     case Scene::GAME:
         gameScene.Update(player);
         break;
-    case Scene::SETTING:
-        break;
     case Scene::QUIT:
         break;
-    case Scene::END:
-        break;
-    default:
-        break;
+    default: break;
     }
-
 }
 
 void Core::Render()
@@ -108,16 +74,12 @@ void Core::Render()
     case Scene::TITLE:
         titleScene.Render();
         break;
+    case Scene::SONG_SELECT:
+        songSelectScene.Render();
+        break;
     case Scene::GAME:
         gameScene.Render(player);
         break;
-    case Scene::SETTING:
-        break;
-    case Scene::QUIT:
-        break;
-    case Scene::END:
-        break;
-    default:
-        break;
+    default: break;
     }
 }

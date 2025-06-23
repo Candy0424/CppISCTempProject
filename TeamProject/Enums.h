@@ -7,8 +7,9 @@ enum class Key
 
 enum class Scene
 {
-	TITLE, GAME, SETTING, QUIT, END
+	TITLE, SONG_SELECT, GAME, SETTING, QUIT, END
 };
+
 
 enum class Tile
 {
