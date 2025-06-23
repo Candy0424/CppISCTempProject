@@ -9,6 +9,7 @@ NodeRenderer::NodeRenderer(int areaWidth, int areaHeight, int laneCount)
     : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(laneCount)
 {
     mapBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
+    judgeMsgs.resize(laneCount);
 }
 
 void NodeRenderer::FillMapBuffer(const std::vector<Node>& nodes, int areaWidth, int areaHeight, int laneCount, int judgeLineX, const NodeManager& nodeManager)
@@ -63,7 +64,7 @@ static void PrintJudgeResult(JudgeResult r, int x, int y) {
     }
 }
 
-void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[2], const std::vector<JudgeMsg> judgeMsgs[2], int judgeLineX, const NodeManager& nodeManager)
+void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[2], int judgeLineX, const NodeManager& nodeManager)
 {
     FillMapBuffer(nodes, areaWidth, areaHeight, laneCount, judgeLineX, nodeManager);
     for (int y = 0; y < areaHeight; ++y) {
@@ -78,16 +79,11 @@ void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[
         }
     }
 
+    UpdateJudgeMsg();
     JudgeResult latestResult = JudgeResult::NONE;
-
-    for (int lane = 0; lane < 2; ++lane) {
-        for (auto it = judgeMsgs[lane].rbegin(); it != judgeMsgs[lane].rend(); ++it) {
-            if (it->frameLeft > 0) {
-                latestResult = it->result;
-                break;
-            }
-        }
-    }
+    for (const auto& msg : judgeMsgs)
+        if (msg.frameLeft > 0)
+            latestResult = msg.result;
 
     int msgBaseY = nodeManager.LaneToY(0) - 2;
     int msgBaseX = judgeLineX + 13;
@@ -102,12 +98,15 @@ void NodeRenderer::RegisterJudgeMsg(int lane, JudgeResult res, int duration)
 {
     if (res == JudgeResult::NONE) return;
     if (lane < 0 || lane >= laneCount) return;
-    if (judgeMsgs[lane].size() >= 10)
-        judgeMsgs[lane].erase(judgeMsgs[lane].begin());
-    judgeMsgs[lane].push_back({ res, duration });
+    judgeMsgs[lane].result = res;
+    judgeMsgs[lane].frameLeft = duration;
 }
 
-const std::vector<JudgeMsg>* NodeRenderer::GetJudgeMsgs() const
+void NodeRenderer::UpdateJudgeMsg()
 {
-    return judgeMsgs;
+    for (auto& msg : judgeMsgs) {
+        if (msg.frameLeft > 0) --msg.frameLeft;
+        if (msg.frameLeft == 0) msg.result = JudgeResult::NONE;
+    }
 }
+

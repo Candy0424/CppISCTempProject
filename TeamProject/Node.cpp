@@ -18,6 +18,7 @@ void Node::Activate(float time, int laneIndex, int startX, int startY)
 
 void Node::Deactivate()
 {
-    prevActive = active;
-    active = false;
+    this->prevActive = active;
+    this->active = false;
+    this->x = -1;
 }

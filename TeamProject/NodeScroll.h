@@ -12,8 +12,8 @@ struct NoteChartInfo {
 
 class NodeManager {
 public:
-    NodeManager(int areaWidth, int areaHeight, int maxNodeCount);
-    void Init(Player* player); // Player* 저장
+    NodeManager(int areaWidth, int areaHeight, int maxNodeCount, int nodeSpeed = 2);
+    void Init(Player* player);
     void LoadChart(const std::string& filename);
     void Update(float currentTime);
     JudgeResult Judge(int lane);
@@ -28,8 +28,10 @@ private:
     int areaWidth, areaHeight, laneCount;
     int judgeLineX;
     int startX;
+    int nodeSpeed;
+    float moveDuration;
     std::vector<Node> nodePool;
     std::vector<NoteChartInfo> chart;
     int nextChartIdx = 0;
-    Player* playerPtr = nullptr; // 추가
+    Player* playerPtr = nullptr;
 };

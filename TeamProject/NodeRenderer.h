@@ -2,7 +2,7 @@
 #include <vector>
 #include "Enums.h"
 #include "Node.h"
-#include "NodeScroll.h" // NodeManager Æ÷ÇÔ
+#include "NodeScroll.h"
 
 struct JudgeMsg {
     JudgeResult result;
@@ -12,12 +12,17 @@ struct JudgeMsg {
 class NodeRenderer {
 public:
     NodeRenderer(int areaWidth, int areaHeight, int laneCount);
-    void Render(const std::vector<Node>& nodes, const bool judgeState[2], const std::vector<JudgeMsg> judgeMsgs[2], int judgeLineX, const NodeManager& nodeManager);
+    void Render(const std::vector<Node>& nodes, const bool judgeState[2], int judgeLineX, const NodeManager& nodeManager);
     void FillMapBuffer(const std::vector<Node>& nodes, int areaWidth, int areaHeight, int laneCount, int judgeLineX, const NodeManager& nodeManager);
     void RegisterJudgeMsg(int lane, JudgeResult res, int duration = 30);
-    const std::vector<JudgeMsg>* GetJudgeMsgs() const;
+    void UpdateJudgeMsg();
 private:
     std::vector<std::vector<Tile>> mapBuffer;
-    std::vector<JudgeMsg> judgeMsgs[2];
+    struct SimpleJudgeMsg {
+        JudgeResult result = JudgeResult::NONE;
+        int frameLeft = 0;
+    };
+    std::vector<SimpleJudgeMsg> judgeMsgs;
     int areaWidth, areaHeight, laneCount;
 };
+

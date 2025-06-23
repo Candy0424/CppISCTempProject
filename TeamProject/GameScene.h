@@ -3,6 +3,7 @@
 #include "NodeScroll.h"
 #include "NodeRenderer.h"
 #include "InputManager.h"
+#include <chrono>
 
 class GameScene {
 public:
@@ -14,6 +15,7 @@ private:
     int width, height;
     float currentTime;
     bool judgeState[2];
+    clock_t prevTime;
     NodeManager nodeManager;
     NodeRenderer nodeRenderer;
 };

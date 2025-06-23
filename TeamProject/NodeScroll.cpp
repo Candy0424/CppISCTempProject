@@ -3,12 +3,13 @@
 #include <algorithm>
 #include <cmath>
 
-NodeManager::NodeManager(int areaWidth, int areaHeight, int maxNodeCount)
-    : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(2)
+NodeManager::NodeManager(int areaWidth, int areaHeight, int maxNodeCount, int nodeSpeed)
+    : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(2), nodeSpeed(nodeSpeed)
 {
     judgeLineX = 10;
     startX = areaWidth - 2;
     nodePool.resize(maxNodeCount);
+    moveDuration = static_cast<float>(startX - judgeLineX) / static_cast<float>(nodeSpeed) / 60.0f;
 }
 
 void NodeManager::Init(Player* player)
@@ -21,12 +22,11 @@ void NodeManager::LoadChart(const std::string& filename)
     chart.clear();
     nextChartIdx = 0;
     std::ifstream fin(filename);
-    if (!fin.is_open())
-        return;
-    float t;
+    if (!fin.is_open()) return;
+    float judgeTime;
     int lane;
-    while (fin >> t >> lane)
-        chart.push_back({ t, lane });
+    while (fin >> judgeTime >> lane)
+        chart.push_back({ judgeTime - moveDuration, lane });
     fin.close();
 }
 
@@ -46,7 +46,7 @@ void NodeManager::Update(float currentTime)
         if (!node.active) continue;
         node.prevX = node.x;
         node.prevY = node.y;
-        node.x -= 1;
+        node.x -= nodeSpeed;
         if (node.x < judgeLineX - 3 && !node.isHit) {
             node.Deactivate();
         }

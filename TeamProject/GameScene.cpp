@@ -5,7 +5,10 @@
 
 GameScene::GameScene()
     : width(0), height(0), currentTime(0.0f),
-    nodeManager(100, 31, 32), nodeRenderer(100, 31, 2) {}
+    nodeManager(80, 31, 32, 2), nodeRenderer(80, 31, 2) // nodeSpeed = 2
+{
+    prevTime = clock();
+}
 
 void GameScene::Init(Player* player)
 {
@@ -22,7 +25,11 @@ void GameScene::Init(Player* player)
 
 void GameScene::Update(Player* player)
 {
-    currentTime += 0.016f;
+    clock_t now = clock();
+    float deltaTime = float(now - prevTime) / CLOCKS_PER_SEC;
+    prevTime = now;
+
+    currentTime += deltaTime;
     InputManager::GetInstance()->Update(judgeState, [this, player](int lane) {
         if (lane == 0) {
             player->GetNode(1)->tileState = Tile::OUTPUT_NODE;
@@ -48,13 +55,14 @@ void GameScene::Update(Player* player)
             node.prevActive = false;
         }
     }
+
+    nodeRenderer.UpdateJudgeMsg();
 }
 
 void GameScene::Render(Player* player)
 {
-    nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeRenderer.GetJudgeMsgs(), nodeManager.GetJudgeLineX(), nodeManager);
+    nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeManager.GetJudgeLineX(), nodeManager);
 
-    // 플레이어의 upper, downper 노드 출력
     auto upperNode = player->GetNode(1);
     auto downperNode = player->GetNode(2);
 
@@ -64,10 +72,10 @@ void GameScene::Render(Player* player)
     IsGotoxy(downperNode->position.x, downperNode->position.y);
     std::cout << (downperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
 
-	IsGotoxy(player->position.x, player->position.y);
+    IsGotoxy(player->position.x, player->position.y);
     int previous = _setmode(_fileno(stdout), _O_U8TEXT);
     std::wcout << L"🎤";
-	_setmode(_fileno(stdout), previous);
+    _setmode(_fileno(stdout), previous);
 
     judgeState[0] = judgeState[1] = false;
     SetCursorVisual(false, 1);
