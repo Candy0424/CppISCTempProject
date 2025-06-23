@@ -23,8 +23,10 @@
 
 static std::vector<SoundEntry> SoundTable =
 {
-	{ L"Sound\\happyrock.mp3", 500, 0 },
-	{ L"Sound\\explosion.wav", 100, 0 }
+	{ L"Sound\\Electric Joy Ride.mp3", 500, 0 },
+	{ L"Sound\\Dream of Memories.mp3", 500, 0 },
+	{ L"Sound\\Ikazuchi.mp3", 500, 0 },
+	{ L"Sound\\Sound\\Freedom Dive.mp3", 500, 0 }
 };
 
 bool OpenMciDevice(LPCWSTR _deviceType, LPCWSTR _name, UINT& _deviceid)
