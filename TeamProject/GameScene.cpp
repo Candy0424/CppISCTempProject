@@ -68,6 +68,11 @@ void GameScene::Render(Player* player)
     auto upperNode = player->GetNode(1);
     auto downperNode = player->GetNode(2);
 
+	COORD res = GetConsoleResolution();
+
+    IsGotoxy(res.X / 2, res.Y);
+    for (int i = 0; i < player)
+
     IsGotoxy(upperNode->position.x, upperNode->position.y);
     std::cout << (upperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
 
