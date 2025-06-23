@@ -59,20 +59,15 @@ void NodeManager::Update(float currentTime)
 
 JudgeResult NodeManager::Judge(int lane)
 {
-    Node* node = GetNearestJudgeableNode(lane, 2);
-    if (node) {
-        int diff = std::abs(node->x - judgeLineX);
-        if (diff <= 0) {
-            HitNode(node);
-            return JudgeResult::PERFECT;
-        }
-        if (diff <= 2) {
-            HitNode(node);
-            return JudgeResult::GOOD;
-        }
-    }
+    Node* node = GetNearestJudgeableNode(lane, 5);
+    if (!node) return JudgeResult::NONE;
+    int diff = std::abs(node->x - judgeLineX);
+    if (diff <= 1) { HitNode(node); return JudgeResult::PERFECT; }
+    if (diff <= 3) { HitNode(node); return JudgeResult::GOOD; }
+    if (diff <= 5) { HitNode(node); return JudgeResult::BAD; }
     return JudgeResult::NONE;
 }
+
 
 Node* NodeManager::GetNearestJudgeableNode(int lane, int judgeRange)
 {
