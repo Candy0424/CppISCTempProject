@@ -20,3 +20,9 @@ enum class JudgeResult
 {
 	NONE, PERFECT, GOOD, BAD, MISS
 };
+
+enum class NodeSymbolType
+{
+	CLASSIC,
+	ALTERNATIVE
+};
