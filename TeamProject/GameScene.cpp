@@ -29,10 +29,7 @@ void GameScene::Update(Player* player)
 {
     clock_t now = clock();
     float deltaTime = float(now - prevTime) / CLOCKS_PER_SEC;
-    if (deltaTime > 0.1f) deltaTime = 1.0f / 60.0f;
-
     prevTime = now;
-    currentTime += deltaTime;
 
     currentTime += deltaTime;
     InputManager::GetInstance()->Update(judgeState, [this, player](int lane) {
