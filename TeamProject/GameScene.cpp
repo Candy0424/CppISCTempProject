@@ -63,15 +63,31 @@ void GameScene::Update(Player* player)
 
 void GameScene::Render(Player* player)
 {
+    static int previousLife = 0;
+
+	COORD res = GetConsoleResolution();
+
+    int curLife = player->GetCurrentLife();
+    if (previousLife != curLife)
+    {
+	    int maxLife = player->GetMaxLife();
+        IsGotoxy(res.X / 2, 1);
+        for (int i = 1; i <= maxLife; ++i)
+        {
+            if (i <= curLife)
+                cout << "■";
+            else
+			    cout << "□";
+        }
+		previousLife = curLife;
+    }
+
     nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeManager.GetJudgeLineX(), nodeManager);
 
     auto upperNode = player->GetNode(1);
     auto downperNode = player->GetNode(2);
 
-	COORD res = GetConsoleResolution();
 
-    IsGotoxy(res.X / 2, res.Y);
-    for (int i = 0; i < player)
 
     IsGotoxy(upperNode->position.x, upperNode->position.y);
     std::cout << (upperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");

@@ -9,7 +9,7 @@ Core::Core()
     currentScene = Scene::TITLE;
     prevScene = Scene::TITLE;
     player = Player::GetInstance();
-    player->InitPlayer(3);
+    player->InitPlayer(10);
     selectedSongId = SOUNDID::END;
     InitAllSounds();
 }
