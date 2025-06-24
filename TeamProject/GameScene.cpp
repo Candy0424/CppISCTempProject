@@ -56,7 +56,7 @@ void GameScene::Update(Player* player)
     for (auto& node : nodes) {
         if (!node.active && node.prevActive && !node.isHit) {
             nodeRenderer.RegisterJudgeMsg(node.lane, JudgeResult::MISS, 30);
-            player->PlayerHit(1);
+            player->PlayerHit(4);
             node.prevActive = false;
         }
     }
@@ -70,14 +70,24 @@ void GameScene::Render(Player* player)
 
     int curLife = player->GetCurrentLife();
     int maxLife = player->GetMaxLife();
-    IsGotoxy(res.X / 3, 1);
+    IsGotoxy(2, 1);
+    int previous1 = _setmode(_fileno(stdout), _O_U16TEXT);
     for (int i = 1; i <= maxLife; ++i)
     {
         if (i <= curLife)
-            cout << "■";
+        {
+            SetColor(COLOR::RED);
+            wcout << L"█";
+            SetColor(COLOR::WHITE);
+        }
         else
-		    cout << "□";
+        {
+            SetColor(COLOR::GRAY);
+		    wcout << L"█";
+            SetColor(COLOR::WHITE);
+        }
     }
+    _setmode(_fileno(stdout), previous1);
 
     nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeManager.GetJudgeLineX(), nodeManager);
 
@@ -93,9 +103,9 @@ void GameScene::Render(Player* player)
     std::cout << (downperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
 
     IsGotoxy(player->position.x, player->position.y);
-    int previous = _setmode(_fileno(stdout), _O_U8TEXT);
+    int previous2 = _setmode(_fileno(stdout), _O_U8TEXT);
     std::wcout << L"🎤";
-    _setmode(_fileno(stdout), previous);
+    _setmode(_fileno(stdout), previous2);
 
     judgeState[0] = judgeState[1] = false;
     SetCursorVisual(false, 1);
