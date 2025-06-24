@@ -9,6 +9,7 @@ NodeRenderer::NodeRenderer(int areaWidth, int areaHeight, int laneCount)
     : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(laneCount)
 {
     mapBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
+    prevBuffer .resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
     judgeMsgs.resize(laneCount);
 }
 
@@ -73,16 +74,20 @@ void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[
 {
     FillMapBuffer(nodes, areaWidth, areaHeight, laneCount, judgeLineX, nodeManager);
     for (int y = 0; y < areaHeight; ++y) {
-        Gotoxy(0, y);
         for (int x = 0; x < areaWidth; ++x) {
-            switch (mapBuffer[y][x]) {
-            case Tile::NODE: std::cout << "♫"; break;
-            case Tile::ROAD: std::cout << " "; break;
-            case Tile::SPACE: std::cout << " "; break;
-            default: std::cout << " "; break;
+            if (mapBuffer[y][x] != prevBuffer[y][x]) {
+                Gotoxy(x, y);
+                switch (mapBuffer[y][x]) {
+                case Tile::NODE: std::cout << "♫"; break;
+                case Tile::ROAD: std::cout << " "; break;
+                case Tile::SPACE: std::cout << " "; break;
+                default: std::cout << " "; break;
+                }
             }
         }
     }
+
+    prevBuffer = mapBuffer;
 
     UpdateJudgeMsg();
     JudgeResult latestResult = JudgeResult::NONE;
@@ -95,8 +100,6 @@ void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[
 
     if (latestResult != JudgeResult::NONE)
         PrintJudgeResult(latestResult, msgBaseX, msgBaseY);
-    else
-        PrintJudgeResult(JudgeResult::NONE, msgBaseX, msgBaseY);
 }
 
 void NodeRenderer::RegisterJudgeMsg(int lane, JudgeResult res, int duration)

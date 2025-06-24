@@ -18,6 +18,7 @@ public:
     void UpdateJudgeMsg();
 private:
     std::vector<std::vector<Tile>> mapBuffer;
+    std::vector<std::vector<Tile>> prevBuffer;
     struct SimpleJudgeMsg {
         JudgeResult result = JudgeResult::NONE;
         int frameLeft = 0;
