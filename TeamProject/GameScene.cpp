@@ -28,15 +28,12 @@ void GameScene::Init(Player* player, SOUNDID songId)
 void GameScene::Update(Player* player)
 {
     if (player->GetCurrentLife() <= 0) 
-    {                
+    {
 		CloseMciDeviceID(curSongId);
 	}   
 
-    clock_t now = clock();
-    float deltaTime = float(now - prevTime) / CLOCKS_PER_SEC;
-    prevTime = now;
+    currentTime += 0.0166666666666667f;
 
-    currentTime += deltaTime;
     InputManager::GetInstance()->Update(judgeState, [this, player](int lane) {
         if (lane == 0) {
             player->GetNode(1)->tileState = Tile::OUTPUT_NODE;
