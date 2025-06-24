@@ -9,13 +9,14 @@ NodeRenderer::NodeRenderer(int areaWidth, int areaHeight, int laneCount)
     : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(laneCount)
 {
     mapBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
+    prevBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
     judgeMsgs.resize(laneCount);
 }
 
 void NodeRenderer::FillMapBuffer(const std::vector<Node>& nodes, int areaWidth, int areaHeight, int laneCount, int judgeLineX, const NodeManager& nodeManager)
 {
     for (auto& row : mapBuffer) std::fill(row.begin(), row.end(), Tile::SPACE);
-    for (int l = 0; l < areaWidth; ++l) {
+    for (int l = 0; l < laneCount; ++l) {
         int y = nodeManager.LaneToY(l);
         if (y >= 0 && y < areaHeight)
             mapBuffer[y][judgeLineX] = Tile::ROAD;
@@ -73,17 +74,14 @@ void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[
 {
     FillMapBuffer(nodes, areaWidth, areaHeight, laneCount, judgeLineX, nodeManager);
     for (int y = 0; y < areaHeight; ++y) {
-        Gotoxy(0, y);
         for (int x = 0; x < areaWidth; ++x) {
-            switch (mapBuffer[y][x]) {
-            case Tile::NODE: std::cout << "♫"; break;
-            case Tile::ROAD: std::cout << " "; break;
-            case Tile::SPACE: std::cout << " "; break;
-            default: std::cout << " "; break;
+            if (mapBuffer[y][x] != prevBuffer[y][x]) {
+                Gotoxy(x, y);
+                PrintTile(x, y, mapBuffer[y][x]);
+                prevBuffer[y][x] = mapBuffer[y][x];
             }
         }
     }
-
     UpdateJudgeMsg();
     JudgeResult latestResult = JudgeResult::NONE;
     for (const auto& msg : judgeMsgs)
@@ -115,3 +113,11 @@ void NodeRenderer::UpdateJudgeMsg()
     }
 }
 
+void NodeRenderer::PrintTile(int x, int y, Tile tile) {
+    switch (tile) {
+    case Tile::NODE: std::cout << "♬"; break;
+    case Tile::ROAD: std::cout << " "; break;
+    case Tile::SPACE: std::cout << " "; break;
+    default: std::cout << " "; break;
+    }
+}
