@@ -68,6 +68,10 @@
     <ClCompile Include="SongSelectScene.cpp">
       <Filter>04. Scene</Filter>
     </ClCompile>
+    <ClCompile Include="SettingScene.cpp" />
+    <ClCompile Include="SettingManager.cpp">
+      <Filter>02. Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -117,6 +121,15 @@
       <Filter>99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="SongTable.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeStyleConfig.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingManager.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingScene.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
   </ItemGroup>

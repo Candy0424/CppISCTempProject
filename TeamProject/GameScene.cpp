@@ -27,11 +27,11 @@ void GameScene::Init(Player* player, SOUNDID songId)
 }
 void GameScene::Update(Player* player)
 {
-    clock_t now = clock();
+    /*clock_t now = clock();
     float deltaTime = float(now - prevTime) / CLOCKS_PER_SEC;
-    prevTime = now;
+    prevTime = now;*/
 
-    currentTime += deltaTime;
+    currentTime += 0.0166666666666667f /*deltaTime*/;
     InputManager::GetInstance()->Update(judgeState, [this, player](int lane) {
         if (lane == 0) {
             player->GetNode(1)->tileState = Tile::OUTPUT_NODE;
