@@ -70,6 +70,15 @@
     <ClCompile Include="Combo.cpp">
       <Filter>03. Object</Filter>
     </ClCompile>
+    <ClCompile Include="SettingManager.cpp">
+      <Filter>02. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingScene.cpp">
+      <Filter>04. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>04. Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -121,6 +130,18 @@
       <Filter>99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="Combo.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameoverScene.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeStyleConfig.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingManager.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingScene.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
   </ItemGroup>
