@@ -108,6 +108,16 @@ void PlaySoundID(SOUNDID _id, bool _repeat)
 	PlayMciDevice(devId, _repeat);
 }
 
+void CloseMciDeviceID(SOUNDID& _id)
+{
+	UINT devId = SoundTable[(int)_id].deviceId;
+	if (devId != 0)
+	{
+		mciSendCommand(devId, MCI_CLOSE, 0, 0);
+		devId = 0;
+	}
+}
+
 void ReleaseAllSounds()
 {
 	for (auto& sound : SoundTable)

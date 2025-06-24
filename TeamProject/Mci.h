@@ -32,5 +32,8 @@ void PlayMciDevice(UINT _deviceid, bool repeat = false);
 bool InitAllSounds();
 // 재생
 void PlaySoundID(SOUNDID _id, bool _repeat = false);
+
+void CloseMciDeviceID(SOUNDID& _id);
+
 // 릴리즈 
 void ReleaseAllSounds();

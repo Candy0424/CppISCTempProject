@@ -27,6 +27,11 @@ void GameScene::Init(Player* player, SOUNDID songId)
 }
 void GameScene::Update(Player* player)
 {
+    if (player->GetCurrentLife() <= 0) 
+    {                
+		CloseMciDeviceID(curSongId);
+	}   
+
     clock_t now = clock();
     float deltaTime = float(now - prevTime) / CLOCKS_PER_SEC;
     prevTime = now;
@@ -54,6 +59,7 @@ void GameScene::Update(Player* player)
     for (auto& node : nodes) {
         if (!node.active && node.prevActive && !node.isHit) {
             nodeRenderer.RegisterJudgeMsg(node.lane, JudgeResult::MISS, 30);
+            player->PlayerHit(1);
             node.prevActive = false;
         }
     }
@@ -63,23 +69,17 @@ void GameScene::Update(Player* player)
 
 void GameScene::Render(Player* player)
 {
-    static int previousLife = 0;
-
 	COORD res = GetConsoleResolution();
 
     int curLife = player->GetCurrentLife();
-    if (previousLife != curLife)
+    int maxLife = player->GetMaxLife();
+    IsGotoxy(res.X / 3, 1);
+    for (int i = 1; i <= maxLife; ++i)
     {
-	    int maxLife = player->GetMaxLife();
-        IsGotoxy(res.X / 2, 1);
-        for (int i = 1; i <= maxLife; ++i)
-        {
-            if (i <= curLife)
-                cout << "■";
-            else
-			    cout << "□";
-        }
-		previousLife = curLife;
+        if (i <= curLife)
+            cout << "■";
+        else
+		    cout << "□";
     }
 
     nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeManager.GetJudgeLineX(), nodeManager);
