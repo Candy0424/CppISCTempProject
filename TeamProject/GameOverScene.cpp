@@ -20,7 +20,7 @@ void GameOverScene::Update(Scene& currentScene)
 			currentScene = Scene::QUIT;
 			break;
 		case 2:
-			currentScene = Scene::SONG_SELECT;
+			currentScene = Scene::TITLE;
 			break;
 		}
 	}
