@@ -48,10 +48,10 @@ void NodeManager::Update(float currentTime)
         node.prevX = node.x;
         node.prevY = node.y;
         node.x -= nodeSpeed;
-        if (node.x < judgeLineX - 3 && !node.isHit) {
+        if (node.x < judgeLineX - 5 && !node.isHit) {
             node.Deactivate();
         }
-        else if (node.x < 0 || node.isHit) {
+        else if (node.isHit) {
             node.Deactivate();
         }
     }

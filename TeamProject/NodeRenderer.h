@@ -26,4 +26,3 @@ private:
     std::vector<SimpleJudgeMsg> judgeMsgs;
     int areaWidth, areaHeight, laneCount;
 };
-

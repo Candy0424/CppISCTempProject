@@ -12,7 +12,7 @@ SongSelectScene::SongSelectScene()
 void SongSelectScene::Init()
 {
     system("cls");
-    Sleep(1);
+    Sleep(100);
 }
 
 void SongSelectScene::Update(Scene& curScene, SOUNDID& selectedSongId)

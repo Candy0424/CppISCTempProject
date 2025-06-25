@@ -1,7 +1,10 @@
 ﻿#include "NodeRenderer.h"
 #include "Console.h"
+#include "SettingManager.h"
 #include <iostream>
 #include <algorithm>
+#include <io.h>
+#include <fcntl.h>
 
 static constexpr int MAX_JUDGE_MSG_LEN = 8;
 
@@ -9,7 +12,7 @@ NodeRenderer::NodeRenderer(int areaWidth, int areaHeight, int laneCount)
     : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(laneCount)
 {
     mapBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
-    prevBuffer .resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
+    prevBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
     judgeMsgs.resize(laneCount);
 }
 
@@ -73,19 +76,31 @@ static void PrintJudgeResult(JudgeResult r, int x, int y) {
 void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[2], int judgeLineX, const NodeManager& nodeManager)
 {
     FillMapBuffer(nodes, areaWidth, areaHeight, laneCount, judgeLineX, nodeManager);
+
+    auto& cfg = SettingManager::GetInstance()->GetConfig();
+    std::vector<std::wstring> nodeSymbols =
+        (cfg.symbolType == NodeSymbolType::CLASSIC) ? cfg.classicSymbols : cfg.alternateSymbols;
+
+    int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
+
     for (int y = 0; y < areaHeight; ++y) {
         for (int x = 0; x < areaWidth; ++x) {
             if (mapBuffer[y][x] != prevBuffer[y][x]) {
                 Gotoxy(x, y);
-                switch (mapBuffer[y][x]) {
-                case Tile::NODE: std::cout << "♫"; break;
-                case Tile::ROAD: std::cout << " "; break;
-                case Tile::SPACE: std::cout << " "; break;
-                default: std::cout << " "; break;
+                if (mapBuffer[y][x] == Tile::NODE) {
+                    SetColor(cfg.nodeColor);
+                    std::wstring symbol = nodeSymbols[(x + y) % nodeSymbols.size()];
+                    std::wcout << symbol;
+                    SetColor(COLOR::WHITE);
+                }
+                else {
+                    std::wcout << L" ";
                 }
             }
         }
     }
+
+    _setmode(_fileno(stdout), prevmode);
 
     prevBuffer = mapBuffer;
 
@@ -117,4 +132,3 @@ void NodeRenderer::UpdateJudgeMsg()
         if (msg.frameLeft == 0) msg.result = JudgeResult::NONE;
     }
 }
-

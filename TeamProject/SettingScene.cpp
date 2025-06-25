@@ -1,65 +1,82 @@
 ﻿#include "SettingScene.h"
-#include <conio.h>
+#include <Windows.h>
 #include <algorithm>
+#include <io.h>
+#include <fcntl.h>
 
 SettingScene::SettingScene()
-    : selectedMenu(0)
+    : selectedMenu(0), upPrev(false), downPrev(false), leftPrev(false), rightPrev(false), enterPrev(false)
 {
     symbolTypeCount = 2;
     colorCandidates = { COLOR::YELLOW, COLOR::RED, COLOR::GREEN, COLOR::SKYBLUE, COLOR::VOILET, COLOR::WHITE };
-    colorNames = { L"YELLOW", L"RED", L"GREEN", L"SKYBLUE", L"VOILET", L"WHITE" };
+    colorNames = { L"YELLOW     ", L"RED      ", L"GREEN       ", L"SKYBLUE      ", L"VOILET      ", L"WHITE     " };
     colorCount = static_cast<int>(colorCandidates.size());
 }
 
-void SettingScene::Init() {}
+void SettingScene::Init()
+{
+	system("cls");
+	Sleep(100);
+}
 
 void SettingScene::Update(Scene& curScene)
 {
-    int key = 0;
-    if (_kbhit()) key = _getch();
-    if (key == 224 && _kbhit()) { // 방향키
-        int arrow = _getch();
-        auto* config = &SettingManager::GetInstance()->GetConfig();
-        if (arrow == 72) selectedMenu = (selectedMenu + 2) % 3; // up
-        else if (arrow == 80) selectedMenu = (selectedMenu + 1) % 3; // down
-        else if (arrow == 75) { // left
-            if (selectedMenu == 0) {
-                int typeIdx = static_cast<int>(config->symbolType);
-                typeIdx = (typeIdx + symbolTypeCount - 1) % symbolTypeCount;
-                config->symbolType = static_cast<NodeSymbolType>(typeIdx);
-            }
-            if (selectedMenu == 1) {
-                int idx = 0;
-                for (int i = 0; i < colorCount; ++i)
-                    if (config->nodeColor == colorCandidates[i]) idx = i;
-                idx = (idx + colorCount - 1) % colorCount;
-                config->nodeColor = colorCandidates[idx];
-            }
+    bool up = (GetAsyncKeyState(VK_UP) & 0x8000) != 0;
+    bool down = (GetAsyncKeyState(VK_DOWN) & 0x8000) != 0;
+    bool left = (GetAsyncKeyState(VK_LEFT) & 0x8000) != 0;
+    bool right = (GetAsyncKeyState(VK_RIGHT) & 0x8000) != 0;
+    bool enter = (GetAsyncKeyState(VK_RETURN) & 0x8000) != 0;
+
+    auto* config = &SettingManager::GetInstance()->GetConfig();
+
+    if (up && !upPrev)         selectedMenu = (selectedMenu + 2) % 3;
+    else if (down && !downPrev)selectedMenu = (selectedMenu + 1) % 3;
+
+    if (left && !leftPrev) {
+        if (selectedMenu == 0) {
+            int typeIdx = static_cast<int>(config->symbolType);
+            typeIdx = (typeIdx + symbolTypeCount - 1) % symbolTypeCount;
+            config->symbolType = static_cast<NodeSymbolType>(typeIdx);
         }
-        else if (arrow == 77) { // right
-            if (selectedMenu == 0) {
-                int typeIdx = static_cast<int>(config->symbolType);
-                typeIdx = (typeIdx + 1) % symbolTypeCount;
-                config->symbolType = static_cast<NodeSymbolType>(typeIdx);
-            }
-            if (selectedMenu == 1) {
-                int idx = 0;
-                for (int i = 0; i < colorCount; ++i)
-                    if (config->nodeColor == colorCandidates[i]) idx = i;
-                idx = (idx + 1) % colorCount;
-                config->nodeColor = colorCandidates[idx];
-            }
+        if (selectedMenu == 1) {
+            int idx = 0;
+            for (int i = 0; i < colorCount; ++i)
+                if (config->nodeColor == colorCandidates[i]) idx = i;
+            idx = (idx + colorCount - 1) % colorCount;
+            config->nodeColor = colorCandidates[idx];
         }
     }
-    else if (key == 13) { // Enter
+    if (right && !rightPrev) {
+        if (selectedMenu == 0) {
+            int typeIdx = static_cast<int>(config->symbolType);
+            typeIdx = (typeIdx + 1) % symbolTypeCount;
+            config->symbolType = static_cast<NodeSymbolType>(typeIdx);
+        }
+        if (selectedMenu == 1) {
+            int idx = 0;
+            for (int i = 0; i < colorCount; ++i)
+                if (config->nodeColor == colorCandidates[i]) idx = i;
+            idx = (idx + 1) % colorCount;
+            config->nodeColor = colorCandidates[idx];
+        }
+    }
+    if (enter && !enterPrev) {
         if (selectedMenu == 2)
             curScene = Scene::TITLE;
     }
+
+    upPrev = up;
+    downPrev = down;
+    leftPrev = left;
+    rightPrev = right;
+    enterPrev = enter;
 }
 
 void SettingScene::Render()
 {
-    system("cls");
+    int prevmode = _setmode(_fileno(stdout), _O_U16TEXT);
+    // 출력 코드
+
     auto& config = SettingManager::GetInstance()->GetConfig();
     std::wstring menuList[3] = {
         L"노드 타입: " + std::wstring(config.symbolType == NodeSymbolType::CLASSIC ? L"(♬,♫)" : L"(♩,♪)"),
@@ -71,8 +88,9 @@ void SettingScene::Render()
         Gotoxy(5, 5 + i * 2);
         if (selectedMenu == i) std::wcout << L"> ";
         else std::wcout << L"  ";
-        if (i == 1) SetColor(config.nodeColor); // 노드 색상 줄만 적용
+        if (i == 1) SetColor(config.nodeColor);
         std::wcout << menuList[i];
         SetColor(COLOR::WHITE);
     }
+    _setmode(_fileno(stdout), prevmode);
 }
