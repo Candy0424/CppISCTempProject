@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 enum class Key
 {
@@ -25,4 +25,14 @@ enum class NodeSymbolType
 {
 	CLASSIC,
 	ALTERNATIVE
+};
+
+enum class PlayerNodeInstrument
+{
+	MIC = 0,    // 🎤
+	PIANO,  // 🎹
+	VIOLIN, // 🎻
+	GUITAR, // 🎸
+	TRUMPET,// 🎺
+	DRUM    // 🥁
 };
