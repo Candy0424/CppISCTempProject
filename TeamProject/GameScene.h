@@ -17,6 +17,7 @@ private:
     int width, height;
     float currentTime;
     bool judgeState[2];
+    bool initPlayer = false;
     clock_t prevTime;
     NodeManager nodeManager;
     NodeRenderer nodeRenderer;

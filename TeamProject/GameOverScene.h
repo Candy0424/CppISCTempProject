@@ -1,13 +1,21 @@
 #pragma once
+#include "Player.h"
 class GameOverScene
 {
 private:
-	void Init();
-	void Update();
-	void Render();
+	bool endAnimation = false;
 
 	void EnterAnimation();
-	void TextAnimation();
-	void ScreenAnimation();
+	bool SelectInput();
+	void GameOverText();
+	void SelectText();
+
+	POS previousPos;
+	int nextData = 0;
+
+public:
+	void Init();
+	void Update(Scene& currentScene);
+	void Render();
 };
 

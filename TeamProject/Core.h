@@ -3,11 +3,12 @@
 #include "Console.h"
 #include "GameScene.h"
 #include "TitleScene.h"
+#include "SettingScene.h"
 #include "SongSelectScene.h"
+#include "GameOverScene.h"
 #include "SongInfo.h"
 #include "Enums.h"
 #include "Player.h"
-#include "SettingScene.h"
 
 class Core
 {
@@ -26,6 +27,7 @@ private:
     SongSelectScene songSelectScene;
     GameScene gameScene;
 	SettingScene settingScene;
+    GameOverScene gameOverScene;
     Player* player;
 	SettingManager* settingManager;
     SOUNDID selectedSongId;

@@ -12,7 +12,9 @@ GameScene::GameScene()
 
 void GameScene::Init(Player* player, SOUNDID songId)
 {
+    initPlayer = false;
     system("cls");
+    player->InitPlayer(40);
     curSongId = songId;
     const SongInfo& info = g_songTable[static_cast<int>(songId)];
     COORD res = GetConsoleResolution();
@@ -24,10 +26,11 @@ void GameScene::Init(Player* player, SOUNDID songId)
     SetCursorVisual(false, 1);
     currentTime = 0.0f;
     judgeState[0] = judgeState[1] = false;
+    initPlayer = true;
 }
 void GameScene::Update(Player* player, Scene& curScene)
 {
-    if (player->GetCurrentLife() <= 0) 
+    if (player->GetCurrentLife() <= 0 && initPlayer) 
     {
 		CloseMciDeviceID(curSongId);
         curScene = Scene::GAME_OVER;

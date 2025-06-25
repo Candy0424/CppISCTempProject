@@ -9,7 +9,6 @@ Core::Core()
     currentScene = Scene::TITLE;
     prevScene = Scene::TITLE;
     player = Player::GetInstance();
-    player->InitPlayer(40);
     selectedSongId = SOUNDID::END;
     InitAllSounds();
 }
@@ -41,6 +40,7 @@ void Core::Init()
     case Scene::SONG_SELECT: songSelectScene.Init(); break;
 	case Scene::SETTING: settingScene.Init(); break;
     case Scene::GAME: gameScene.Init(player, selectedSongId); break;
+    case Scene::GAME_OVER: gameOverScene.Init(); break;
     default: break;
     }
 }
@@ -63,8 +63,10 @@ void Core::Update()
         settingScene.Update(currentScene);
 		break;
     case Scene::GAME:
-        gameScene.Update(player);
+        gameScene.Update(player, currentScene);
         break;
+    case Scene::GAME_OVER:
+        gameOverScene.Update(currentScene);
     case Scene::QUIT:
         break;
     default: break;
@@ -87,6 +89,8 @@ void Core::Render()
     case Scene::GAME:
         gameScene.Render(player);
         break;
+    case Scene::GAME_OVER:
+        gameOverScene.Render();
     default: break;
     }
 }
