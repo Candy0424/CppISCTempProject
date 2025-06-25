@@ -24,7 +24,11 @@ TitleScene::TitleScene()
 
 TitleScene::~TitleScene() {}
 
-void TitleScene::Init() {}
+void TitleScene::Init()
+{
+    system("cls");
+    Sleep(100);
+}
 
 void TitleScene::Update(Scene& curScene)
 {

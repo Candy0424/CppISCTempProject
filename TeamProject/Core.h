@@ -7,6 +7,7 @@
 #include "SongInfo.h"
 #include "Enums.h"
 #include "Player.h"
+#include "SettingScene.h"
 
 class Core
 {
@@ -24,6 +25,8 @@ private:
     TitleScene titleScene;
     SongSelectScene songSelectScene;
     GameScene gameScene;
+	SettingScene settingScene;
     Player* player;
+	SettingManager* settingManager;
     SOUNDID selectedSongId;
 };

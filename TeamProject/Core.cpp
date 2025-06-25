@@ -39,6 +39,7 @@ void Core::Init()
     {
     case Scene::TITLE: titleScene.Init(); break;
     case Scene::SONG_SELECT: songSelectScene.Init(); break;
+	case Scene::SETTING: settingScene.Init(); break;
     case Scene::GAME: gameScene.Init(player, selectedSongId); break;
     default: break;
     }
@@ -58,6 +59,9 @@ void Core::Update()
     case Scene::SONG_SELECT:
         songSelectScene.Update(currentScene, selectedSongId);
         break;
+	case Scene::SETTING:
+        settingScene.Update(currentScene);
+		break;
     case Scene::GAME:
         gameScene.Update(player);
         break;
@@ -77,6 +81,9 @@ void Core::Render()
     case Scene::SONG_SELECT:
         songSelectScene.Render();
         break;
+	case Scene::SETTING:
+        settingScene.Render();
+		break;
     case Scene::GAME:
         gameScene.Render(player);
         break;

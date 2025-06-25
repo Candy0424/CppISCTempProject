@@ -18,4 +18,5 @@ private:
     int colorCount;
     std::vector<COLOR> colorCandidates;
     std::vector<std::wstring> colorNames;
+    bool upPrev, downPrev, leftPrev, rightPrev, enterPrev;
 };
