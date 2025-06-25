@@ -7,7 +7,7 @@ enum class Key
 
 enum class Scene
 {
-	TITLE, SONG_SELECT, GAME, SETTING, QUIT, END
+	TITLE, SONG_SELECT, GAME, SETTING, QUIT, GAME_OVER , END
 };
 
 

@@ -25,11 +25,12 @@ void GameScene::Init(Player* player, SOUNDID songId)
     currentTime = 0.0f;
     judgeState[0] = judgeState[1] = false;
 }
-void GameScene::Update(Player* player)
+void GameScene::Update(Player* player, Scene& curScene)
 {
     if (player->GetCurrentLife() <= 0) 
     {
 		CloseMciDeviceID(curSongId);
+        curScene = Scene::GAME_OVER;
 	}   
 
     currentTime += 0.0166666666666667f;

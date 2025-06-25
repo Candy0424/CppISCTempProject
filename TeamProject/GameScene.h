@@ -11,7 +11,7 @@ class GameScene {
 public:
     GameScene();
     void Init(Player* player, SOUNDID songId);
-    void Update(Player* player);
+    void Update(Player* player, Scene& curScene);
     void Render(Player* player);
 private:
     int width, height;
