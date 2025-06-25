@@ -12,6 +12,8 @@ GameScene::GameScene()
 
 void GameScene::Init(Player* player, SOUNDID songId)
 {
+    InitAllSounds();
+    nodeRenderer.Init();
     initPlayer = false;
     system("cls");
     player->InitPlayer(40);
