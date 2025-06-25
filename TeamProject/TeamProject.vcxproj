@@ -35,6 +35,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerNodeStyle.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Score.h" />
     <ClInclude Include="SettingManager.h" />
     <ClInclude Include="SettingScene.h" />
     <ClInclude Include="SongInfo.h" />
@@ -55,6 +56,7 @@
     <ClCompile Include="NodeRender.cpp" />
     <ClCompile Include="NodeScroll.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Score.cpp" />
     <ClCompile Include="SettingManager.cpp" />
     <ClCompile Include="SettingScene.cpp" />
     <ClCompile Include="SongSelectScene.cpp" />
