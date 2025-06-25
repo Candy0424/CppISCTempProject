@@ -33,6 +33,7 @@
     <ClInclude Include="NodeScroll.h" />
     <ClInclude Include="NodeStyleConfig.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerNodeStyle.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SettingManager.h" />
     <ClInclude Include="SettingScene.h" />

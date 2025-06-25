@@ -14,9 +14,16 @@ public:
     void Render();
 private:
     int selectedMenu;
+    int menuCount;
     int symbolTypeCount;
     int colorCount;
+    int playerInstrumentCount;
+    int playerColorCount;
     std::vector<COLOR> colorCandidates;
     std::vector<std::wstring> colorNames;
+    std::vector<PlayerNodeInstrument> playerInstruments;
+    std::vector<std::wstring> playerInstrumentNames;
+    std::vector<COLOR> playerColorCandidates;
+    std::vector<std::wstring> playerColorNames;
     bool upPrev, downPrev, leftPrev, rightPrev, enterPrev;
 };

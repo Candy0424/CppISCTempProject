@@ -1,9 +1,4 @@
-#pragma once
-
-enum class Key
-{
-	D, F, J, K
-};
+﻿#pragma once
 
 enum class Scene
 {
@@ -25,4 +20,14 @@ enum class NodeSymbolType
 {
 	CLASSIC,
 	ALTERNATIVE
+};
+
+enum class PlayerNodeInstrument
+{
+	MIC = 0,    // 🎤
+	PIANO,  // 🎹
+	VIOLIN, // 🎻
+	GUITAR, // 🎸
+	TRUMPET,// 🎺
+	DRUM    // 🥁
 };
