@@ -24,4 +24,5 @@ void InputManager::Update(bool judgeState[2], std::function<void(int)> onJudgeLa
         judgeState[1] = true;
         onJudgeLane(1);
     }
+
 }

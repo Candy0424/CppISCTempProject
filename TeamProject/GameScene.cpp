@@ -40,13 +40,31 @@ void GameScene::Update(Player* player, Scene& curScene)
 
     InputManager::GetInstance()->Update(judgeState, [this, player](int lane) {
         if (lane == 0) {
-            player->GetNode(1)->tileState = Tile::OUTPUT_NODE;
+            PlayerNode* node = player->GetNode(1);
+            if (node->tileState != Tile::OUTPUT_NODE)
+            {
+                node->tileState = Tile::OUTPUT_NODE;
+                nodeOneCanJudge = true;
+            }
+            else
+                nodeOneCanJudge = false;
         }
         else if (lane == 1) {
-            player->GetNode(2)->tileState = Tile::OUTPUT_NODE;
+            PlayerNode* node = player->GetNode(2);
+            if (node->tileState != Tile::OUTPUT_NODE)
+            {
+                node->tileState = Tile::OUTPUT_NODE;
+                nodeTwoCanJudge = true;
+            }
+            else
+                nodeTwoCanJudge = false;
         }
 
-        JudgeResult jr = nodeManager.Judge(lane);
+            JudgeResult jr = JudgeResult::NONE;
+        if ((nodeOneCanJudge && lane == 0) || (nodeTwoCanJudge && lane == 1))
+        {
+            jr = nodeManager.Judge(lane);
+        }
         if (jr != JudgeResult::NONE)
             nodeRenderer.RegisterJudgeMsg(lane, jr, 30);
         });

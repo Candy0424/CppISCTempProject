@@ -18,6 +18,7 @@ private:
     float currentTime;
     bool judgeState[2];
     bool initPlayer = false;
+    bool nodeOneCanJudge, nodeTwoCanJudge;
     clock_t prevTime;
     NodeManager nodeManager;
     NodeRenderer nodeRenderer;
