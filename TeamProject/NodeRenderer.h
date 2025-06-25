@@ -16,6 +16,7 @@ public:
     void FillMapBuffer(const std::vector<Node>& nodes, int areaWidth, int areaHeight, int laneCount, int judgeLineX, const NodeManager& nodeManager);
     void RegisterJudgeMsg(int lane, JudgeResult res, int duration = 30);
     void UpdateJudgeMsg();
+    void Init();
 private:
     std::vector<std::vector<Tile>> mapBuffer;
     std::vector<std::vector<Tile>> prevBuffer;

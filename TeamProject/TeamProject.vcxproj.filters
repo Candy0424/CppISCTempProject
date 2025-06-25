@@ -166,5 +166,8 @@
     <Text Include="Chart_Electric_Joy_Ride.txt">
       <Filter>05. Resource</Filter>
     </Text>
+    <Text Include="Chart_DREAM_OF_MEMORIES.txt">
+      <Filter>05. Resource</Filter>
+    </Text>
   </ItemGroup>
 </Project>

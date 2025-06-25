@@ -132,3 +132,13 @@ void NodeRenderer::UpdateJudgeMsg()
         if (msg.frameLeft == 0) msg.result = JudgeResult::NONE;
     }
 }
+
+void NodeRenderer::Init()
+{
+    mapBuffer.clear();
+    prevBuffer.clear();
+    judgeMsgs.clear();
+    mapBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
+    prevBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
+    judgeMsgs.resize(laneCount);
+}

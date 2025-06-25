@@ -67,6 +67,7 @@
     <Media Include="Sound\Ikazuchi.mp3" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Chart_DREAM_OF_MEMORIES.txt" />
     <Text Include="Chart_Electric_Joy_Ride.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
