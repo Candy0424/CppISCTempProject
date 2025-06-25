@@ -1,10 +1,5 @@
 ﻿#pragma once
 
-enum class Key
-{
-	D, F, J, K
-};
-
 enum class Scene
 {
 	TITLE, SONG_SELECT, GAME, SETTING, QUIT, END
