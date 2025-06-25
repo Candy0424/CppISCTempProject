@@ -1,5 +1,10 @@
 #include "Combo.h"
+void Combo::ClearCombo()
+{
+	currentCombo = 0;
+}
 
-Combo* Combo::instance = nullptr;
-
-Combo::Combo() {}
+void Combo::AddCombo(unsigned int combo)
+{
+	currentCombo += combo;
+}

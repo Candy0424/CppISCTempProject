@@ -6,6 +6,7 @@
 #include "SongTable.h"
 #include "Mci.h"
 #include <chrono>
+#include "Combo.h"
 
 class GameScene {
 public:
@@ -23,4 +24,5 @@ private:
     NodeManager nodeManager;
     NodeRenderer nodeRenderer;
     SOUNDID curSongId;
+    Combo combo;
 };

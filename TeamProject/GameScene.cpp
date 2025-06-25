@@ -29,6 +29,7 @@ void GameScene::Init(Player* player, SOUNDID songId)
     currentTime = 0.0f;
     judgeState[0] = judgeState[1] = false;
     initPlayer = true;
+    combo.ClearCombo();
 }
 void GameScene::Update(Player* player, Scene& curScene)
 {
@@ -66,6 +67,10 @@ void GameScene::Update(Player* player, Scene& curScene)
         if ((nodeOneCanJudge && lane == 0) || (nodeTwoCanJudge && lane == 1))
         {
             jr = nodeManager.Judge(lane);
+            if (jr == JudgeResult::MISS || jr == JudgeResult::BAD)
+                combo.ClearCombo();
+            else if (jr != JudgeResult::NONE)
+                combo.AddCombo(1);
         }
         if (jr != JudgeResult::NONE)
             nodeRenderer.RegisterJudgeMsg(lane, jr, 30);
@@ -81,6 +86,7 @@ void GameScene::Update(Player* player, Scene& curScene)
         if (!node.active && node.prevActive && !node.isHit) {
             nodeRenderer.RegisterJudgeMsg(node.lane, JudgeResult::MISS, 30);
             player->PlayerHit(4);
+            combo.ClearCombo();
             node.prevActive = false;
         }
     }
@@ -132,5 +138,9 @@ void GameScene::Render(Player* player)
     _setmode(_fileno(stdout), previous2);
 
     judgeState[0] = judgeState[1] = false;
+
+    int curCombo = combo.GetCurrentCombo();
+    IsGotoxy(res.X / 3, res.Y / 2);
+    std::cout << curCombo;
     SetCursorVisual(false, 1);
 }
