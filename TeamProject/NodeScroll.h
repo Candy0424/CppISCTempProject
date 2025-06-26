@@ -24,6 +24,7 @@ public:
     int GetJudgeLineX() const;
     int GetAreaWidth() const;
     int GetAreaHeight() const;
+    bool IsAllNotesFinished() const;
 private:
     int areaWidth, areaHeight, laneCount, maxNodeCount;
     int judgeLineX;
