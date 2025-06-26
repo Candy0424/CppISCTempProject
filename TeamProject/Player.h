@@ -49,7 +49,7 @@ public:
 	void InitPlayer(int life);
 	void SetPosition(int x, int y);
 	void PlayerHit(int damage);
-	void PlayerHeal(int heal);
+	void PlayerHeal(JudgeResult& jr);
 	int GetCurrentLife() const { return currentLife; }
 	int GetMaxLife() const { return maxLife; }
 

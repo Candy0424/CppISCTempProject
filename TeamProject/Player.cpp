@@ -47,7 +47,18 @@ void Player::PlayerHit(int damage)
 		isDie = true;
 }
 
-void Player::PlayerHeal(int heal)
+void Player::PlayerHeal(JudgeResult& jr)
 {
-	currentLife = std::clamp(currentLife + abs(heal), 0, maxLife);
+	switch (jr)
+	{
+	case JudgeResult::PERFECT:
+		currentLife = std::clamp(currentLife + 2, 0, maxLife);
+		break;
+	case JudgeResult::GOOD:
+		currentLife = std::clamp(currentLife + 1, 0, maxLife);
+		break;
+	default:
+		break;
+
+	}
 }
