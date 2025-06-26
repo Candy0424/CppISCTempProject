@@ -130,7 +130,7 @@ void SettingScene::Render()
             std::find(playerInstruments.begin(), playerInstruments.end(), playerStyle.GetInstrument()))],
         L"플레이어 색상: " + playerColorNames[std::distance(playerColorCandidates.begin(),
             std::find(playerColorCandidates.begin(), playerColorCandidates.end(), playerStyle.GetColor()))],
-        L"타이틀 화면으로 나가기"
+        L"타이틀 화면으로"
     };
     for (int i = 0; i < 5; ++i) {
         Gotoxy(5, 5 + i * 2);
