@@ -34,13 +34,18 @@ void TitleScene::Init()
 
 void TitleScene::Update(Scene& curScene)
 {
-    // 입력(비동기)
     bool up = (GetAsyncKeyState(VK_UP) & 0x8000) != 0;
     bool down = (GetAsyncKeyState(VK_DOWN) & 0x8000) != 0;
     bool enter = (GetAsyncKeyState(VK_RETURN) & 0x8000) != 0;
 
-    if (up && !upPrev)   selectedIdx = (selectedIdx + 2) % 3;
-    if (down && !downPrev) selectedIdx = (selectedIdx + 1) % 3;
+    if (up && !upPrev) {
+        selectedIdx = (selectedIdx + 2) % 3;
+        PlaySoundID(SOUNDID::CURSOR_SOUND);
+    }
+    if (down && !downPrev) {
+        selectedIdx = (selectedIdx + 1) % 3;
+        PlaySoundID(SOUNDID::CURSOR_SOUND);
+    }
 
     if (enter && !enterPrev) {
         if (selectedIdx == 0) curScene = Scene::SONG_SELECT;
@@ -48,9 +53,9 @@ void TitleScene::Update(Scene& curScene)
         else if (selectedIdx == 2) curScene = Scene::QUIT;
     }
     upPrev = up; downPrev = down; enterPrev = enter;
-
     titleScrollX = (titleScrollX + 2) % (int)titleLines[0].size();
 }
+
 
 void TitleScene::Render()
 {

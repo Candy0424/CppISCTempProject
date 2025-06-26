@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <io.h>
 #include <fcntl.h>
+#include "Mci.h"
 
 SettingScene::SettingScene()
     : selectedMenu(0), upPrev(false), downPrev(false), leftPrev(false), rightPrev(false), enterPrev(false)
@@ -44,8 +45,15 @@ void SettingScene::Update(Scene& curScene)
     auto* config = &SettingManager::GetInstance()->GetConfig();
     auto* playerStyle = &SettingManager::GetInstance()->GetPlayerStyle();
 
-    if (up && !upPrev)         selectedMenu = (selectedMenu + menuCount - 1) % menuCount;
-    else if (down && !downPrev)selectedMenu = (selectedMenu + 1) % menuCount;
+    if (up && !upPrev) {
+        selectedMenu = (selectedMenu + menuCount - 1) % menuCount;
+        PlaySoundID(SOUNDID::CURSOR_SOUND);
+    }
+    else if (down && !downPrev) {
+        selectedMenu = (selectedMenu + 1) % menuCount;
+        PlaySoundID(SOUNDID::CURSOR_SOUND);
+    }
+
 
     if (left && !leftPrev) {
         if (selectedMenu == 0) {

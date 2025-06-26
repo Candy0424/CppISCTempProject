@@ -27,22 +27,24 @@ void SongSelectScene::Update(Scene& curScene, SOUNDID& selectedSongId)
             selectedIdx = songCount;
         else
             selectedIdx--;
+        PlaySoundID(SOUNDID::CURSOR_SOUND);
     }
     if (down && !downPrev) {
         selectedIdx = (selectedIdx + 1) % (songCount + 1);
+        PlaySoundID(SOUNDID::CURSOR_SOUND);
     }
 
-
     if (enter && !enterPrev) {
-        if(selectedIdx == songCount) {
+        if (selectedIdx == songCount) {
             curScene = Scene::TITLE;
             return;
-		}
+        }
         selectedSongId = g_songTable[selectedIdx].id;
         curScene = Scene::GAME;
     }
     upPrev = up; downPrev = down; enterPrev = enter;
 }
+
 
 void SongSelectScene::Render()
 {
