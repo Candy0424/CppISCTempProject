@@ -25,7 +25,7 @@ public:
     int GetAreaWidth() const;
     int GetAreaHeight() const;
 private:
-    int areaWidth, areaHeight, laneCount;
+    int areaWidth, areaHeight, laneCount, maxNodeCount;
     int judgeLineX;
     int startX;
     int nodeSpeed;
