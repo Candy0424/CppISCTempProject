@@ -21,10 +21,10 @@ private:
     bool judgeState[2];
     bool initPlayer = false;
     bool nodeOneCanJudge, nodeTwoCanJudge;
-    clock_t prevTime;
     NodeManager nodeManager;
     NodeRenderer nodeRenderer;
     SOUNDID curSongId;
     Combo combo;
     Score score;
+    std::chrono::steady_clock::time_point t_start;
 };
