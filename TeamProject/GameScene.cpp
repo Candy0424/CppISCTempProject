@@ -141,7 +141,14 @@ void GameScene::Render(Player* player)
     judgeState[0] = judgeState[1] = false;
 
     int curCombo = combo.GetCurrentCombo();
+    int clearNum = combo.GetCrrentClearNum();
+    for (int i = 1; i <= clearNum; ++i)
+    {
+        IsGotoxy(res.X / 3 + i, res.Y / 2);
+        std::cout << ' ';
+    }
     IsGotoxy(res.X / 3, res.Y / 2);
     std::cout << curCombo;
+    combo.ClearNum();
     SetCursorVisual(false, 1);
 }
