@@ -5,7 +5,7 @@
 
 GameScene::GameScene()
     : width(0), height(0), currentTime(0.0f),
-    nodeManager(80, 31, 32), nodeRenderer(80, 31, 2)
+    nodeManager(80, 31, 32, 1), nodeRenderer(80, 31, 2)
 {
     prevTime = clock();
 }
