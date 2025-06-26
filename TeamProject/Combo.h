@@ -8,6 +8,10 @@ private:
 	unsigned int currentClearNum = 0;
 	bool isFiver;
 	unsigned int fiverCombo = 0;
+	unsigned int fiverGage = 30;
+	float fiverDuration = 10.0f;
+	float fiverStartTime = .0f;
+	
 
 public:
 	unsigned int GetCurrentCombo() { return currentCombo; }
@@ -17,5 +21,6 @@ public:
 	void AddCombo(unsigned int combo);
 	bool GetFiver() { return isFiver; }
 	void SetFiver(bool value);
-	void FiverCheck();
+	void FiverCheck(float& startTime);
+	void FiverCool(float& curTime);
 };

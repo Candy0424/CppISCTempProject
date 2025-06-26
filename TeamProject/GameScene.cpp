@@ -41,7 +41,8 @@ void GameScene::Update(Player* player, Scene& curScene)
         CloseMciDeviceID(curSongId);
         curScene = Scene::GAME_OVER;
     }
-    combo.FiverCheck();
+    combo.FiverCheck(currentTime);
+    combo.FiverCool(currentTime);
     bool fiver = combo.GetFiver();
 
     auto t_now = std::chrono::steady_clock::now();
@@ -142,9 +143,18 @@ void GameScene::Render(Player* player)
     auto upperNode = player->GetNode(1);
     auto downperNode = player->GetNode(2);
 
-    IsGotoxy(upperNode->position.x, upperNode->position.y);
-    std::cout << (upperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
+    bool isFiver = combo.GetFiver();
 
+    if (isFiver)
+    {
+        COLOR color = player->rainbowNode();
+        SetColor(color);
+    }
+    else
+        player->ColorInit();
+
+    IsGotoxy(upperNode->position.x, upperNode->position.y);    
+    std::cout << (upperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
     IsGotoxy(downperNode->position.x, downperNode->position.y);
     std::cout << (downperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
 
@@ -152,6 +162,9 @@ void GameScene::Render(Player* player)
     int previous2 = _setmode(_fileno(stdout), _O_U8TEXT);
     std::wcout << L"🎤";
     _setmode(_fileno(stdout), previous2);
+
+    SetColor(COLOR::WHITE);
+
 
     judgeState[0] = judgeState[1] = false;
 
@@ -169,7 +182,5 @@ void GameScene::Render(Player* player)
     std::cout << curCombo;
     combo.ClearNum();
 
-    IsGotoxy(0, 0);
-    std::cout << combo.GetFiver();
     SetCursorVisual(false, 1);
 }

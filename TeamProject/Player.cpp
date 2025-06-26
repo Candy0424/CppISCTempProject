@@ -17,9 +17,22 @@ void Player::InitPlayer(int life)
 	upperNode.tileState = Tile::INPUT_NODE;
 	downperNode.tileState = Tile::INPUT_NODE;
 
+	colorIdx = 0;
+
 	maxLife = life;
 	currentLife = maxLife;
 	isDie = false;
+}
+
+COLOR Player::rainbowNode()
+{
+	colorIdx %= 7;
+	return nodeColors[colorIdx++];
+}
+
+void Player::ColorInit()
+{
+	colorIdx = 0;
 }
 
 PlayerNode* Player::GetNode(int number)
