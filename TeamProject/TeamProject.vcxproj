@@ -69,6 +69,7 @@
   <ItemGroup>
     <Text Include="Chart_DREAM_OF_MEMORIES.txt" />
     <Text Include="Chart_Electric_Joy_Ride.txt" />
+    <Text Include="Chart_IKAZUCHI.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

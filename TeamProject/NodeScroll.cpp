@@ -4,7 +4,7 @@
 #include <cmath>
 
 NodeManager::NodeManager(int areaWidth, int areaHeight, int maxNodeCount, int nodeSpeed)
-    : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(2), nodeSpeed(nodeSpeed)
+    : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(2), nodeSpeed(nodeSpeed), maxNodeCount(maxNodeCount)
 {
     judgeLineX = 10;
     startX = areaWidth - 2;
@@ -16,6 +16,8 @@ NodeManager::NodeManager(int areaWidth, int areaHeight, int maxNodeCount, int no
 void NodeManager::Init(Player* player)
 {
     playerPtr = player;
+    nodePool.clear();
+    nodePool.resize(maxNodeCount);
 }
 
 void NodeManager::LoadChart(const std::string& filename)
