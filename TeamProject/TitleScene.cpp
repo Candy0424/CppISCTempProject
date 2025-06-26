@@ -1,4 +1,5 @@
 ﻿#include "TitleScene.h"
+#include "Mci.h"
 #include <Windows.h>
 #include <io.h>
 #include <fcntl.h>
@@ -28,6 +29,7 @@ void TitleScene::Init()
 {
     system("cls");
     Sleep(100);
+    PlaySoundID(SOUNDID::TITLE_SONG, true);
 }
 
 void TitleScene::Update(Scene& curScene)

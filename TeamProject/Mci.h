@@ -14,6 +14,7 @@ enum class SOUNDID
     DREAM_OF_MEMORIES,
     IKAZUCHI,
     FREEDOM_DIVE,
+	TITLE_SONG,
     END
 };
 
