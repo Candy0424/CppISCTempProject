@@ -36,6 +36,11 @@ void GameScene::Init(Player* player, SOUNDID songId)
 
 void GameScene::Update(Player* player, Scene& curScene)
 {
+    if (nodeManager.IsAllNotesFinished())
+    {
+        curScene = Scene::GAME_CLEAR;
+    }
+
     if (player->GetCurrentLife() <= 0 && initPlayer)
     {
         CloseMciDeviceID(curSongId);
