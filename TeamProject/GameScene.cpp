@@ -78,7 +78,7 @@ void GameScene::Update(Player* player, Scene& curScene)
             else if (jr != JudgeResult::NONE)
                 combo.AddCombo(1);
 
-            if (combo.GetFiver() && ((jr == JudgeResult::MISS) || jr == JudgeResult::NONE)) {
+            if (combo.GetFiver() && jr == JudgeResult::MISS) {
                 jr = JudgeResult::GOOD;
             }
 
