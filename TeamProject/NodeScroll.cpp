@@ -1,7 +1,9 @@
 #include "NodeScroll.h"
+#include "SettingManager.h"
 #include <fstream>
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
 
 NodeManager::NodeManager(int areaWidth, int areaHeight, int maxNodeCount, int nodeSpeed)
     : areaWidth(areaWidth), areaHeight(areaHeight), laneCount(2), nodeSpeed(nodeSpeed), maxNodeCount(maxNodeCount)
@@ -10,7 +12,6 @@ NodeManager::NodeManager(int areaWidth, int areaHeight, int maxNodeCount, int no
     startX = areaWidth - 2;
     nodePool.resize(maxNodeCount);
     moveDuration = float(startX - judgeLineX) / float(nodeSpeed) / 60;
-
 }
 
 void NodeManager::Init(Player* player)
@@ -35,11 +36,15 @@ void NodeManager::LoadChart(const std::string& filename)
 
 void NodeManager::Update(float currentTime)
 {
+    auto& cfg = SettingManager::GetInstance()->GetConfig();
+    int symbolCount = (cfg.symbolType == NodeSymbolType::CLASSIC) ? cfg.classicSymbols.size() : cfg.alternateSymbols.size();
+
     while (nextChartIdx < chart.size() && currentTime >= chart[nextChartIdx].spawnTime) {
         for (auto& node : nodePool) {
             if (!node.active) {
                 int y = LaneToY(chart[nextChartIdx].lane);
-                node.Activate(chart[nextChartIdx].spawnTime, chart[nextChartIdx].lane, startX, y);
+                int symbolIdx = (symbolCount > 0) ? rand() % symbolCount : 0;
+                node.Activate(chart[nextChartIdx].spawnTime, chart[nextChartIdx].lane, startX, y, symbolIdx);
                 break;
             }
         }
@@ -70,7 +75,6 @@ JudgeResult NodeManager::Judge(int lane)
     return JudgeResult::NONE;
 }
 
-
 Node* NodeManager::GetNearestJudgeableNode(int lane, int judgeRange)
 {
     Node* best = nullptr;
@@ -91,7 +95,7 @@ void NodeManager::HitNode(Node* node)
     if (node) node->isHit = true;
 }
 
-const std::vector<Node>& NodeManager::GetNodes() const { return nodePool; }
+ std::vector<Node>& NodeManager::GetNodes()  { return nodePool; }
 int NodeManager::LaneToY(int laneIndex) const
 {
     if (playerPtr) {
@@ -108,10 +112,8 @@ bool NodeManager::IsAllNotesFinished() const
 {
     if (nextChartIdx < chart.size())
         return false;
-
     for (const auto& node : nodePool)
         if (node.active)
             return false;
-
     return true;
 }

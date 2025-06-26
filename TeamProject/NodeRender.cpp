@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <io.h>
 #include <fcntl.h>
+#include <cstdlib>
 
 static constexpr int MAX_JUDGE_MSG_LEN = 8;
 
@@ -24,7 +25,6 @@ void NodeRenderer::FillMapBuffer(const std::vector<Node>& nodes, int areaWidth, 
         if (y >= 0 && y < areaHeight)
             mapBuffer[y][judgeLineX] = Tile::ROAD;
     }
-
     for (const auto& node : nodes) {
         if (node.active && node.x >= 0 && node.x < areaWidth && node.y >= 0 && node.y < areaHeight)
             mapBuffer[node.y][node.x] = Tile::NODE;
@@ -35,9 +35,7 @@ static void PrintJudgeResult(JudgeResult r, int x, int y) {
     Gotoxy(x, y);
     for (int i = 0; i < MAX_JUDGE_MSG_LEN; ++i)
         std::cout << " ";
-
     Gotoxy(x, y);
-
     switch (r) {
     case JudgeResult::PERFECT: {
         COLOR rainbow[7] = {
@@ -76,7 +74,6 @@ static void PrintJudgeResult(JudgeResult r, int x, int y) {
 void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[2], int judgeLineX, const NodeManager& nodeManager)
 {
     FillMapBuffer(nodes, areaWidth, areaHeight, laneCount, judgeLineX, nodeManager);
-
     auto& cfg = SettingManager::GetInstance()->GetConfig();
     std::vector<std::wstring> nodeSymbols =
         (cfg.symbolType == NodeSymbolType::CLASSIC) ? cfg.classicSymbols : cfg.alternateSymbols;
@@ -89,8 +86,13 @@ void NodeRenderer::Render(const std::vector<Node>& nodes, const bool judgeState[
                 Gotoxy(x, y);
                 if (mapBuffer[y][x] == Tile::NODE) {
                     SetColor(cfg.nodeColor);
-                    std::wstring symbol = nodeSymbols[(x + y) % nodeSymbols.size()];
-                    std::wcout << symbol;
+                    for (const auto& node : nodes) {
+                        if (node.active && node.x == x && node.y == y) {
+                            std::wstring symbol = nodeSymbols[node.symbolIndex % nodeSymbols.size()];
+                            std::wcout << symbol;
+                            break;
+                        }
+                    }
                     SetColor(COLOR::WHITE);
                 }
                 else {
@@ -133,7 +135,7 @@ void NodeRenderer::UpdateJudgeMsg()
     }
 }
 
-void NodeRenderer::Init()
+void NodeRenderer::Init(NodeManager& nodeManager)
 {
     mapBuffer.clear();
     prevBuffer.clear();
@@ -141,4 +143,15 @@ void NodeRenderer::Init()
     mapBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
     prevBuffer.resize(areaHeight, std::vector<Tile>(areaWidth, Tile::SPACE));
     judgeMsgs.resize(laneCount);
+
+    auto& cfg = SettingManager::GetInstance()->GetConfig();
+    std::vector<std::wstring> nodeSymbols =
+        (cfg.symbolType == NodeSymbolType::CLASSIC) ? cfg.classicSymbols : cfg.alternateSymbols;
+
+    int symbolCount = nodeSymbols.size();
+    if (symbolCount == 0) symbolCount = 1;
+    for (auto& node : nodeManager.GetNodes()) {
+        if (node.active)
+            node.symbolIndex = rand() % symbolCount;
+    }
 }

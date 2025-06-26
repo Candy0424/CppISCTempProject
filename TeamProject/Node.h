@@ -10,8 +10,10 @@ struct Node
     int prevX, prevY;
     bool prevActive;
 
+    int symbolIndex;
+
     Node();
 
-    void Activate(float time, int laneIndex, int startX, int startY);
+    void Activate(float time, int laneIndex, int startX, int startY, int symbolCount);
     void Deactivate();
 };

@@ -19,7 +19,7 @@ public:
     JudgeResult Judge(int lane);
     Node* GetNearestJudgeableNode(int lane, int judgeRange);
     void HitNode(Node* node);
-    const std::vector<Node>& GetNodes() const;
+     std::vector<Node>& GetNodes() ;
     int LaneToY(int laneIndex) const;
     int GetJudgeLineX() const;
     int GetAreaWidth() const;
