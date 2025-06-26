@@ -103,3 +103,15 @@ int NodeManager::LaneToY(int laneIndex) const
 int NodeManager::GetJudgeLineX() const { return judgeLineX; }
 int NodeManager::GetAreaWidth() const { return areaWidth; }
 int NodeManager::GetAreaHeight() const { return areaHeight; }
+
+bool NodeManager::IsAllNotesFinished() const
+{
+    if (nextChartIdx < chart.size())
+        return false;
+
+    for (const auto& node : nodePool)
+        if (node.active)
+            return false;
+
+    return true;
+}
