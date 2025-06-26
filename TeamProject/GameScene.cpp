@@ -72,6 +72,8 @@ void GameScene::Update(Player* player, Scene& curScene)
                 combo.ClearCombo();
             else if (jr != JudgeResult::NONE)
                 combo.AddCombo(1);
+            
+            score.AddScore(jr);
         }
         if (jr != JudgeResult::NONE)
             nodeRenderer.RegisterJudgeMsg(lane, jr, 30);
@@ -139,6 +141,10 @@ void GameScene::Render(Player* player)
     _setmode(_fileno(stdout), previous2);
 
     judgeState[0] = judgeState[1] = false;
+
+    int curScore = score.GetCurrentScore();
+    IsGotoxy(res.X / 10 * 7, 1);
+    cout << "Score : " << curScore;
 
     int curCombo = combo.GetCurrentCombo();
     int clearNum = combo.GetCrrentClearNum();

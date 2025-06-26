@@ -1,8 +1,21 @@
 #include "Score.h"
 
-void Score::AddScore(unsigned int addScore)
+void Score::AddScore(const JudgeResult& jr)
 {
-	currentScore += addScore;
+	switch (jr)
+	{
+	case JudgeResult::PERFECT:
+		currentScore += 10000;
+		break;
+	case JudgeResult::GOOD:
+		currentScore += 5000;
+		break;
+	case JudgeResult::BAD:
+		currentScore += 2000;
+		break;
+	default:
+		break;
+	}
 }
 
 void Score::RecordJudge(JudgeResult& jr)
@@ -10,6 +23,7 @@ void Score::RecordJudge(JudgeResult& jr)
 	scoreContainer[jr]++;
 }
 
-void Score::CalculateRate()
+double Score::CalculateRate()
 {
+	return 1.2;
 }

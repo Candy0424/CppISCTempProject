@@ -79,6 +79,9 @@
     <ClCompile Include="GameOverScene.cpp">
       <Filter>04. Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>03. Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -147,6 +150,9 @@
     <ClInclude Include="PlayerNodeStyle.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Sound\Electric Joy Ride.mp3">
@@ -167,6 +173,9 @@
       <Filter>05. Resource</Filter>
     </Text>
     <Text Include="Chart_DREAM_OF_MEMORIES.txt">
+      <Filter>05. Resource</Filter>
+    </Text>
+    <Text Include="Chart_IKAZUCHI.txt">
       <Filter>05. Resource</Filter>
     </Text>
   </ItemGroup>

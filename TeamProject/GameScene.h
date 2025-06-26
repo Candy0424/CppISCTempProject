@@ -7,6 +7,7 @@
 #include "Mci.h"
 #include <chrono>
 #include "Combo.h"
+#include "Score.h"
 
 class GameScene {
 public:
@@ -25,4 +26,5 @@ private:
     NodeRenderer nodeRenderer;
     SOUNDID curSongId;
     Combo combo;
+    Score score;
 };

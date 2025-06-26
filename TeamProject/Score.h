@@ -9,8 +9,8 @@ private:
 	unsigned int currentScore = 0;
 public:
 	unsigned int GetCurrentScore() { return currentScore; }
-	void AddScore(unsigned int addScore);
+	void AddScore(const JudgeResult& jr);
 	void RecordJudge(JudgeResult& jr);
-	void CalculateRate();
+	double CalculateRate();
 };
 
