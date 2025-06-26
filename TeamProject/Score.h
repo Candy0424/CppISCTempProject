@@ -8,6 +8,7 @@ class Score
 private:
 	unsigned int currentScore = 0;
 public:
+	void Init();
 	unsigned int GetCurrentScore() { return currentScore; }
 	void AddScore(const JudgeResult& jr);
 	void RecordJudge(JudgeResult& jr);

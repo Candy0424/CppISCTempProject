@@ -1,4 +1,5 @@
 #include "Combo.h"
+
 void Combo::ClearCombo()
 {
 	while (currentCombo >= 10)
@@ -9,6 +10,7 @@ void Combo::ClearCombo()
 
 
 	currentCombo = 0;
+	fiverCombo = 0;
 }
 
 void Combo::ClearNum()
@@ -20,11 +22,6 @@ void Combo::AddCombo(unsigned int combo)
 {
 	currentCombo += combo;
 	fiverCombo += combo;
-}
-
-bool Combo::GetFiver()
-{
-	return isFiver;
 }
 
 void Combo::SetFiver(bool value)

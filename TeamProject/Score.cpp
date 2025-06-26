@@ -1,5 +1,10 @@
 #include "Score.h"
 
+void Score::Init()
+{
+	currentScore = 0;
+}
+
 void Score::AddScore(const JudgeResult& jr)
 {
 	switch (jr)

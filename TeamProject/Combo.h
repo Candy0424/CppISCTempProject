@@ -15,7 +15,7 @@ public:
 	void ClearCombo();
 	void ClearNum();
 	void AddCombo(unsigned int combo);
-	bool GetFiver();
+	bool GetFiver() { return isFiver; }
 	void SetFiver(bool value);
 	void FiverCheck();
 };

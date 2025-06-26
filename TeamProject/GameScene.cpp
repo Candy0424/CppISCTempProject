@@ -31,6 +31,7 @@ void GameScene::Init(Player* player, SOUNDID songId)
 	judgeState[0] = judgeState[1] = false;
 	initPlayer = true;
 	combo.ClearCombo();
+	score.Init();
 }
 void GameScene::Update(Player* player, Scene& curScene)
 {
