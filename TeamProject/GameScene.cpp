@@ -168,10 +168,14 @@ void GameScene::Render(Player* player)
         }
     }
 
-    SetColor(COLOR::WHITE);
+    auto& playerStyle = SettingManager::GetInstance()->GetPlayerStyle();
+
+	COLOR playerColor = playerStyle.GetColor();
+
     _setmode(_fileno(stdout), previous1);
 
     nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeManager.GetJudgeLineX(), nodeManager);
+    SetColor(playerColor);
 
     auto upperNode = player->GetNode(1);
     auto downperNode = player->GetNode(2);
@@ -193,8 +197,11 @@ void GameScene::Render(Player* player)
 
     IsGotoxy(player->position.x, player->position.y);
     int previous2 = _setmode(_fileno(stdout), _O_U8TEXT);
-    std::wcout << L"🎤";
+    std::wstring nodeEmoji = playerStyle.GetInstrumentEmoji();
+    std::wcout << nodeEmoji;
+
     _setmode(_fileno(stdout), previous2);
+
 
     SetColor(COLOR::WHITE);
 
@@ -215,5 +222,5 @@ void GameScene::Render(Player* player)
     std::cout << curCombo;
     combo.ClearNum();
 
-    SetCursorVisual(false, 1);
+    SetColor(playerColor);
 }

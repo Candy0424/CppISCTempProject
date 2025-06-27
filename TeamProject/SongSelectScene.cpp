@@ -59,14 +59,14 @@ void SongSelectScene::Render()
             if (selectedIdx == i)
                 wcout << L">  " << L"타이틀 화면으로";
             else
-                wcout << L"  " << L"타이틀 화면으로";
+                wcout << L"  " << L"타이틀 화면으로 ";
         }
         else // 곡 출력
         {
             if (selectedIdx == i)
                 wcout << L">  " << g_songTable[i].title;
             else
-                wcout << L"  " << g_songTable[i].title;
+                wcout << L"  " << g_songTable[i].title << " ";
         }
     }
     _setmode(_fileno(stdout), prevmode);

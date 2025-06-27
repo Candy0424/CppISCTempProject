@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "NodeScroll.h"
 #include "NodeRenderer.h"
+#include "SettingManager.h"
 #include "InputManager.h"
 #include "SongTable.h"
 #include "Mci.h"
