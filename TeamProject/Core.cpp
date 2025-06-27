@@ -21,6 +21,7 @@ Core::~Core()
 
 void Core::Run()
 {
+    Init();
     bool isRunning = true;
     while (isRunning)
     {
