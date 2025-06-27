@@ -131,7 +131,7 @@ void SettingScene::Render()
     auto& playerStyle = SettingManager::GetInstance()->GetPlayerStyle();
 
     std::wstring menuList[5] = {
-        L"노드 타입: " + std::wstring(config.symbolType == NodeSymbolType::CLASSIC ? L"(♬,♫)" : L"(♩,♪)"),
+        L"노드 타입: " + std::wstring(config.symbolType == NodeSymbolType::CLASSIC ? L"(♫,♫)" : L"(◆,◈)"),
         L"노드 색상: " + colorNames[std::distance(colorCandidates.begin(),
             std::find(colorCandidates.begin(), colorCandidates.end(), config.nodeColor))],
         L"플레이어 모양: " + playerInstrumentNames[std::distance(playerInstruments.begin(),

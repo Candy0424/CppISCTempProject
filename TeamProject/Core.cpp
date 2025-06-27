@@ -21,6 +21,7 @@ Core::~Core()
 
 void Core::Run()
 {
+    Init();
     bool isRunning = true;
     while (isRunning)
     {
@@ -34,6 +35,7 @@ void Core::Run()
 
 void Core::Init()
 {
+    SetCursorVisual(false, 1);
     switch (currentScene)
     {
     case Scene::TITLE: titleScene.Init(); break;
