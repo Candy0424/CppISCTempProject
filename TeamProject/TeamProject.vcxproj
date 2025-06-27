@@ -24,6 +24,7 @@
     <ClInclude Include="Core.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="GameClear.h" />
     <ClInclude Include="GameoverScene.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="InputManager.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="Combo.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="GameClear.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputManager.cpp" />

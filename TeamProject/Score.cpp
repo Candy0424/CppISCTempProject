@@ -30,5 +30,16 @@ void Score::RecordJudge(JudgeResult& jr)
 
 double Score::CalculateRate()
 {
-	return 1.2;
+	double maxScore = 0;
+	double rate = 0;
+
+	for (auto item : scoreContainer)
+		maxScore += item.second;
+
+	maxScore *= 10000;
+
+	if (maxScore > 0)
+		rate = (currentScore / maxScore) * 100;
+
+	return rate;
 }

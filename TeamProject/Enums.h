@@ -2,7 +2,7 @@
 
 enum class Scene
 {
-	TITLE, SONG_SELECT, GAME, SETTING, QUIT, GAME_OVER , END
+	TITLE, SONG_SELECT, GAME, SETTING, QUIT, GAME_OVER, GAME_CLEAR, END
 };
 
 
@@ -30,4 +30,9 @@ enum class PlayerNodeInstrument
 	GUITAR, // 🎸
 	TRUMPET,// 🎺
 	DRUM    // 🥁
+};
+
+enum class Rank
+{
+	S = 8, A = 16, B = 24, C = 32, D = 40, E = 48
 };

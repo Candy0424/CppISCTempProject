@@ -1,6 +1,7 @@
 #pragma once
 #include "Defines.h"
 #include "Enums.h"
+#include "Console.h"
 
 typedef struct _pos
 {
@@ -52,12 +53,27 @@ public:
 	void PlayerHeal(JudgeResult& jr);
 	int GetCurrentLife() const { return currentLife; }
 	int GetMaxLife() const { return maxLife; }
+	COLOR rainbowNode();
+	void ColorInit();
 
 	PlayerNode* GetNode(int number); // 1일때는 upper 2일때는 downper Node를 반환하는 함수
 	
 
 
 private:
+	COLOR nodeColors[7]
+	{
+		COLOR::RED,
+		COLOR::YELLOW,
+		COLOR::GREEN,
+		COLOR::LIGHT_BLUE,
+		COLOR::BLUE,
+		COLOR::VOILET,
+		COLOR::LIGHT_VIOLET,
+	};
+
+	int colorIdx = 0;
+
 	PlayerNode upperNode;
 	PlayerNode downperNode;
 

@@ -2,6 +2,9 @@
 
 void Combo::ClearCombo()
 {
+	if (currentCombo > maxCombo)
+		maxCombo = currentCombo;
+
 	while (currentCombo >= 10)
 	{
 		currentClearNum++;
@@ -20,8 +23,14 @@ void Combo::ClearNum()
 
 void Combo::AddCombo(unsigned int combo)
 {
+
 	currentCombo += combo;
-	fiverCombo += combo;
+
+	if (!isFiver)
+		fiverCombo += combo;
+
+	if (currentCombo > maxCombo)
+		maxCombo = currentCombo;
 }
 
 void Combo::SetFiver(bool value)
@@ -29,9 +38,20 @@ void Combo::SetFiver(bool value)
 	isFiver = value;
 }
 
-void Combo::FiverCheck()
+void Combo::FiverCheck(float& startTime)
 {
-	if (isFiver) return;
+	if (isFiver)
+	{
+		fiverCombo = 0;
+		return;
+	}
 
-	isFiver = fiverCombo >= 20;
+	isFiver = fiverCombo >= fiverGage;
+	fiverStartTime = startTime;
+}
+
+void Combo::FiverCool(float& curTime)
+{
+	if (fiverStartTime + fiverDuration < curTime)
+		isFiver = false;
 }
