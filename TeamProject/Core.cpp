@@ -35,6 +35,7 @@ void Core::Run()
 
 void Core::Init()
 {
+    SetCursorVisual(false, 1);
     switch (currentScene)
     {
     case Scene::TITLE: titleScene.Init(); break;
