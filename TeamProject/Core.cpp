@@ -72,7 +72,7 @@ void Core::Update()
         gameOverScene.Update(currentScene);
         break;
     case Scene::GAME_CLEAR:
-        gameClearScene.Update(score);
+        gameClearScene.Update(score, currentScene);
         break;
     case Scene::QUIT:
         break;

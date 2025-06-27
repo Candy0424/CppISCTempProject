@@ -1,4 +1,6 @@
 ﻿#include "GameClear.h"
+#include <conio.h>
+#include <iostream>
 
 void GameClear::RateCalculate(Score& score)
 {
@@ -75,8 +77,15 @@ void GameClear::Init(Score& score)
 	EnterAnimation();
 }
 
-void GameClear::Update(Score& score)
+void GameClear::Update(Score& score, Scene& curScene)
 {
+	if (!endAnimation)
+		return;
+
+	if (_kbhit()) {
+		_getch();
+		curScene = Scene::TITLE;
+	}
 }
 
 void GameClear::JudgesRender(Score& score)
@@ -191,5 +200,8 @@ void GameClear::Render(Score& score, Combo& combo)
 		cout << "MAX COMBO : " << maxCombo;
 
 		JudgesRender(score);
+
+		IsGotoxy(res.X / 2 - 15, res.Y - 2);
+		std::cout << "아무 키나 눌러 타이틀 씬으로 이동";
 	}
 }

@@ -105,7 +105,7 @@ public:
 	void RankLoad();
 	void EnterAnimation();
 	void Init(Score& score);
-	void Update(Score& score);
+	void Update(Score& score, Scene& curScene);
 	void JudgesRender(Score& score);
 	void Render(Score& score, Combo& combo);
 };
