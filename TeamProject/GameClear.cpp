@@ -47,12 +47,32 @@ void GameClear::RankLoad()
 	}
 }
 
+void GameClear::EnterAnimation()
+{
+	COORD res = GetConsoleResolution();
+	IsGotoxy(0, 0);
+	int previous = _setmode(_fileno(stdout), _O_U16TEXT);
+	for (int i = 0; i <= res.Y - 1; ++i)
+	{
+		Gotoxy(0, i);
+		for (int j = 0; j < res.X; ++j)
+		{
+			wcout << L"█";
+		}
+		Sleep(15);
+	}
+	_setmode(_fileno(stdout), previous);
+	system("cls");
+	endAnimation = true;
+}
+
 void GameClear::Init(Score& score)
 {
 	system("cls");
 	RateCalculate(score);
 	RankCalculate();
 	RankLoad();
+	EnterAnimation();
 }
 
 void GameClear::Update(Score& score)
@@ -145,28 +165,31 @@ void GameClear::JudgesRender(Score& score)
 
 void GameClear::Render(Score& score, Combo& combo)
 {
-	COORD res = GetConsoleResolution();
-
-	int curScore = score.GetCurrentScore();
-	int maxCombo = combo.GetMaxCombo();
-
-	IsGotoxy(res.X / 2 - 7, (res.Y / 2 - 7));
-	cout << "Score : " << curScore;
-
-	int previous = _setmode(_fileno(stdout), _O_U16TEXT);
-	int offset = 0;
-	for (int i = start; i < end; ++i)
+	if (endAnimation)
 	{
-		IsGotoxy(res.X / 2 - 8, (res.Y / 2 - 5) + offset++);
-		wcout << ranks[i];
+		COORD res = GetConsoleResolution();
+
+		int curScore = score.GetCurrentScore();
+		int maxCombo = combo.GetMaxCombo();
+
+		IsGotoxy(res.X / 2 - 7, (res.Y / 2 - 7));
+		cout << "Score : " << curScore;
+
+		int previous = _setmode(_fileno(stdout), _O_U16TEXT);
+		int offset = 0;
+		for (int i = start; i < end; ++i)
+		{
+			IsGotoxy(res.X / 2 - 8, (res.Y / 2 - 5) + offset++);
+			wcout << ranks[i];
+		}
+		_setmode(_fileno(stdout), previous);
+
+		IsGotoxy(res.X / 2 - 7, res.Y / 2 + 5);
+		cout << "Rate : " << std::fixed << std::setprecision(2) << rate;
+
+		IsGotoxy(res.X / 2 - 7, res.Y / 2 + 8);
+		cout << "MAX COMBO : " << maxCombo;
+
+		JudgesRender(score);
 	}
-	_setmode(_fileno(stdout), previous);
-
-	IsGotoxy(res.X / 2 - 7, res.Y / 2 + 5);
-	cout << "Rate : " << std::fixed << std::setprecision(2) << rate;
-
-	IsGotoxy(res.X / 2 - 7, res.Y / 2 + 8);
-	cout << "MAX COMBO : " << maxCombo;
-
-	JudgesRender(score);
 }

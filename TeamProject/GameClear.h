@@ -96,11 +96,14 @@ private:
 
 	double rate = 0;
 
+	bool endAnimation = false;
+
 
 public:
 	void RateCalculate(Score& score);
 	void RankCalculate();
 	void RankLoad();
+	void EnterAnimation();
 	void Init(Score& score);
 	void Update(Score& score);
 	void JudgesRender(Score& score);
