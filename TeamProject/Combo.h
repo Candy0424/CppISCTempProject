@@ -20,6 +20,7 @@ public:
 	unsigned int GetCrrentClearNum() { return currentClearNum; }
 	unsigned int GetMaxFiverGage() { return fiverGage; }
 	unsigned int GetCurrentFiverGage() { return fiverCombo; }
+	void InitCombo();
 	void ClearCombo();
 	void ClearNum();
 	void AddCombo(unsigned int combo);

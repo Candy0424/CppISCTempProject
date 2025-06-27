@@ -1,5 +1,15 @@
 #include "Combo.h"
 
+void Combo::InitCombo()
+{
+	currentCombo = 0;
+	currentClearNum = 0;
+	maxCombo = 0;
+	fiverCombo = 0;
+	fiverStartTime = .0f;
+	isFiver = false;
+}
+
 void Combo::ClearCombo()
 {
 	if (currentCombo > maxCombo)

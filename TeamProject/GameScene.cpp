@@ -11,11 +11,15 @@ GameScene::GameScene()
 
 void GameScene::Init(Player* player, SOUNDID songId)
 {
+    system("cls");
     ReleaseAllSounds();
     InitAllSounds();
+    endGame = false;
+    endTextAnimation = false;
+    combo.InitCombo();
+    score.Init();
     nodeRenderer.Init(nodeManager);
     initPlayer = false;
-    system("cls");
     player->InitPlayer(40);
     curSongId = songId;
     const SongInfo& info = g_songTable[static_cast<int>(songId)];
@@ -30,8 +34,6 @@ void GameScene::Init(Player* player, SOUNDID songId)
     currentTime = 0.0f;
     judgeState[0] = judgeState[1] = false;
     initPlayer = true;
-    combo.ClearCombo();
-    score.Init();
 }
 
 void GameScene::ClearTextRender()
@@ -71,7 +73,6 @@ void GameScene::ClearTextRender()
         }
     }
     _setmode(_fileno(stdout), previous);
-    Sleep(2000);
 }
 
 void GameScene::Update(Player* player, Scene& curScene, Score& setScore, Combo& setCombo)
@@ -83,7 +84,11 @@ void GameScene::Update(Player* player, Scene& curScene, Score& setScore, Combo& 
         endGame = true;
         CloseMciDeviceID(curSongId);
         if (endTextAnimation)
+        {
+            Sleep(2000);
             curScene = Scene::GAME_CLEAR;
+
+        }
     }
 
     if (player->GetCurrentLife() <= 0 && initPlayer)
@@ -194,7 +199,7 @@ void GameScene::Render(Player* player)
             wcout << L"█";
         }
     }
-    
+
     SetColor(COLOR::WHITE);
 
     IsGotoxy(2, 4);
@@ -212,7 +217,7 @@ void GameScene::Render(Player* player)
 
     auto& playerStyle = SettingManager::GetInstance()->GetPlayerStyle();
 
-	COLOR playerColor = playerStyle.GetColor();
+    COLOR playerColor = playerStyle.GetColor();
 
     _setmode(_fileno(stdout), previous1);
 
@@ -232,7 +237,7 @@ void GameScene::Render(Player* player)
     else
         player->ColorInit();
 
-    IsGotoxy(upperNode->position.x, upperNode->position.y);    
+    IsGotoxy(upperNode->position.x, upperNode->position.y);
     std::cout << (upperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");
     IsGotoxy(downperNode->position.x, downperNode->position.y);
     std::cout << (downperNode->tileState == Tile::OUTPUT_NODE ? "●" : "○");

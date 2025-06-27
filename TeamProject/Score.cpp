@@ -3,6 +3,7 @@
 void Score::Init()
 {
 	currentScore = 0;
+	scoreContainer.clear();
 }
 
 void Score::AddScore(const JudgeResult& jr)
@@ -13,7 +14,7 @@ void Score::AddScore(const JudgeResult& jr)
 		currentScore += 10000;
 		break;
 	case JudgeResult::GOOD:
-		currentScore += 8000;	
+		currentScore += 8000;
 		break;
 	case JudgeResult::BAD:
 		currentScore += 2000;
@@ -25,7 +26,8 @@ void Score::AddScore(const JudgeResult& jr)
 
 void Score::RecordJudge(JudgeResult& jr)
 {
-	scoreContainer[jr]++;
+	if (jr != JudgeResult::NONE)
+		scoreContainer[jr]++;
 }
 
 double Score::CalculateRate()
@@ -62,7 +64,7 @@ bool Score::FullComboCheck()
 
 	for (auto item : scoreContainer)
 	{
-		if (item.second != 0 && ((item.first != JudgeResult::PERFECT) && item.first != JudgeResult::GOOD))
+		if (item.second != 0 && ((item.first != JudgeResult::PERFECT) && (item.first != JudgeResult::GOOD)))
 			fullCombo = false;
 	}
 
