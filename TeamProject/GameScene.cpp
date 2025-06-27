@@ -34,14 +34,55 @@ void GameScene::Init(Player* player, SOUNDID songId)
     score.Init();
 }
 
+void GameScene::ClearTextRender()
+{
+    COORD res = GetConsoleResolution();
+
+    bool perfect = score.PerfectCheck();
+    bool fullCombo = score.FullComboCheck();
+    int previous = _setmode(_fileno(stdout), _O_U16TEXT);
+    int colorIdx = 0;
+    if (perfect)
+    {
+        for (int i = 0; i < 3; ++i)
+        {
+            IsGotoxy(res.X / 2 - 8, res.Y / 2 + i);
+            SetColor(colors[colorIdx++]);
+            wcout << allPerfectText[i];
+
+            colorIdx %= 7;
+        }
+    }
+    else if (fullCombo)
+    {
+        SetColor(COLOR::LIGHT_VIOLET);
+        for (int i = 0; i < 3; ++i)
+        {
+            IsGotoxy(res.X / 2 - 8, res.Y / 2 + i);
+            wcout << fullComboText[i];
+        }
+    }
+    else
+    {
+        for (int i = 0; i < 3; ++i)
+        {
+            IsGotoxy(res.X / 2 - 8, res.Y / 2 + i);
+            wcout << clearText[i];
+        }
+    }
+    _setmode(_fileno(stdout), previous);
+}
+
 void GameScene::Update(Player* player, Scene& curScene, Score& setScore, Combo& setCombo)
 {
     setScore = score;
     setCombo = combo;
     if (nodeManager.IsAllNotesFinished())
     {
+        endGame = true;
         CloseMciDeviceID(curSongId);
-        curScene = Scene::GAME_CLEAR;
+        if (endTextAnimation)
+            curScene = Scene::GAME_CLEAR;
     }
 
     if (player->GetCurrentLife() <= 0 && initPlayer)
@@ -221,6 +262,12 @@ void GameScene::Render(Player* player)
     IsGotoxy(res.X / 3, res.Y / 2);
     std::cout << curCombo;
     combo.ClearNum();
+
+    if (endGame)
+    {
+        ClearTextRender();
+        endTextAnimation = true;
+    }
 
     SetColor(playerColor);
 }

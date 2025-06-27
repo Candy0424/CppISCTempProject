@@ -43,3 +43,28 @@ double Score::CalculateRate()
 
 	return rate;
 }
+
+bool Score::PerfectCheck()
+{
+	bool perfect = true;
+	for (auto item : scoreContainer)
+	{
+		if (item.second != 0 && item.first != JudgeResult::PERFECT)
+			perfect = false;
+	}
+
+	return perfect;
+}
+
+bool Score::FullComboCheck()
+{
+	bool fullCombo = true;
+
+	for (auto item : scoreContainer)
+	{
+		if (item.second != 0 && ((item.first != JudgeResult::PERFECT) && item.first != JudgeResult::GOOD))
+			fullCombo = false;
+	}
+
+	return fullCombo;
+}

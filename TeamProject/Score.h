@@ -16,5 +16,7 @@ public:
 	void AddScore(const JudgeResult& jr);
 	void RecordJudge(JudgeResult& jr);
 	double CalculateRate();
+	bool PerfectCheck();
+	bool FullComboCheck();
 };
 
