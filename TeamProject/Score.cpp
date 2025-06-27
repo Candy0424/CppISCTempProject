@@ -13,7 +13,7 @@ void Score::AddScore(const JudgeResult& jr)
 		currentScore += 10000;
 		break;
 	case JudgeResult::GOOD:
-		currentScore += 7000;
+		currentScore += 8000;	
 		break;
 	case JudgeResult::BAD:
 		currentScore += 2000;
