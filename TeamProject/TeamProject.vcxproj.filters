@@ -82,6 +82,9 @@
     <ClCompile Include="Score.cpp">
       <Filter>03. Object</Filter>
     </ClCompile>
+    <ClCompile Include="GameClear.cpp">
+      <Filter>04. Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enums.h">
@@ -151,6 +154,9 @@
       <Filter>99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="Score.h">
+      <Filter>99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameClear.h">
       <Filter>99. Headers</Filter>
     </ClInclude>
   </ItemGroup>

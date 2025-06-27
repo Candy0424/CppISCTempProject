@@ -41,6 +41,7 @@ void Core::Init()
 	case Scene::SETTING: settingScene.Init(); break;
     case Scene::GAME: gameScene.Init(player, selectedSongId); break;
     case Scene::GAME_OVER: gameOverScene.Init(); break;
+    case Scene::GAME_CLEAR: gameClearScene.Init(score); break;
     default: break;
     }
 }
@@ -63,10 +64,14 @@ void Core::Update()
         settingScene.Update(currentScene);
 		break;
     case Scene::GAME:
-        gameScene.Update(player, currentScene);
+        gameScene.Update(player, currentScene, score, combo);
         break;
     case Scene::GAME_OVER:
         gameOverScene.Update(currentScene);
+        break;
+    case Scene::GAME_CLEAR:
+        gameClearScene.Update(score);
+        break;
     case Scene::QUIT:
         break;
     default: break;
@@ -91,6 +96,10 @@ void Core::Render()
         break;
     case Scene::GAME_OVER:
         gameOverScene.Render();
+        break;
+    case Scene::GAME_CLEAR:
+        gameClearScene.Render(score, combo);
+        break;
     default: break;
     }
 }

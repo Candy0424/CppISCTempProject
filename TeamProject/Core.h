@@ -6,6 +6,7 @@
 #include "SettingScene.h"
 #include "SongSelectScene.h"
 #include "GameOverScene.h"
+#include "GameClear.h"
 #include "SongInfo.h"
 #include "Enums.h"
 #include "Player.h"
@@ -28,7 +29,10 @@ private:
     GameScene gameScene;
 	SettingScene settingScene;
     GameOverScene gameOverScene;
+    GameClear gameClearScene;
     Player* player;
 	SettingManager* settingManager;
     SOUNDID selectedSongId;
+    Score score;
+    Combo combo;
 };

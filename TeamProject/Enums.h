@@ -31,3 +31,8 @@ enum class PlayerNodeInstrument
 	TRUMPET,// 🎺
 	DRUM    // 🥁
 };
+
+enum class Rank
+{
+	S = 8, A = 16, B = 24, C = 32, D = 40, E = 48
+};

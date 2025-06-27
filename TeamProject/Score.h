@@ -1,15 +1,18 @@
 #pragma once
 #include <unordered_map>
 #include "Enums.h"
+#include <iomanip>
 
 class Score
 {
 	std::unordered_map<JudgeResult, unsigned int> scoreContainer;
 private:
-	unsigned int currentScore = 0;
+	double currentScore = 0;
 public:
 	void Init();
-	unsigned int GetCurrentScore() { return currentScore; }
+	double GetCurrentScore() { return currentScore; }
+	unsigned int GetJudgeCount(const JudgeResult& jr) {return scoreContainer[jr];}
+
 	void AddScore(const JudgeResult& jr);
 	void RecordJudge(JudgeResult& jr);
 	double CalculateRate();
