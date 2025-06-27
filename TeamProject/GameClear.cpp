@@ -82,6 +82,8 @@ void GameClear::Update(Score& score, Scene& curScene)
 	if (!endAnimation)
 		return;
 
+	Sleep(100);
+
 	if (_kbhit()) {
 		_getch();
 		curScene = Scene::TITLE;
