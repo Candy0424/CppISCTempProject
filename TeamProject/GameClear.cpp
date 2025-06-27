@@ -71,6 +71,7 @@ void GameClear::EnterAnimation()
 void GameClear::Init(Score& score)
 {
 	system("cls");
+	Sleep(100);
 	RateCalculate(score);
 	RankCalculate();
 	RankLoad();
@@ -82,10 +83,9 @@ void GameClear::Update(Score& score, Scene& curScene)
 	if (!endAnimation)
 		return;
 
-	Sleep(100);
-
-	if (_kbhit()) {
-		_getch();
+	
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
 		curScene = Scene::TITLE;
 	}
 }
@@ -204,6 +204,6 @@ void GameClear::Render(Score& score, Combo& combo)
 		JudgesRender(score);
 
 		IsGotoxy(res.X / 2 - 15, res.Y - 2);
-		std::cout << "아무 키나 눌러 타이틀 씬으로 이동";
+		std::cout << "스페이스 바를 눌러 타이틀 씬으로 이동";
 	}
 }
