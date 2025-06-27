@@ -75,6 +75,10 @@
     <Text Include="Chart_Electric_Joy_Ride.txt" />
     <Text Include="Chart_IKAZUCHI.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

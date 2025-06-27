@@ -78,12 +78,12 @@ void GameScene::Update(Player* player, Scene& curScene, Score& setScore, Combo& 
 {
     setScore = score;
     setCombo = combo;
+    if (nodeManager.IsAllNotesFinished())
+    {
         endGame = true;
         CloseMciDeviceID(curSongId);
         if (endTextAnimation)
             curScene = Scene::GAME_CLEAR;
-    if (nodeManager.IsAllNotesFinished())
-    {
     }
 
     if (player->GetCurrentLife() <= 0 && initPlayer)
