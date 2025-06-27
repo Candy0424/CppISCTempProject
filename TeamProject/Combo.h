@@ -5,7 +5,7 @@ class Combo
 {
 private:
 	unsigned int currentCombo = 0;
-	unsigned int maxCombo = -2147483647;
+	unsigned int maxCombo = 0;
 	unsigned int currentClearNum = 0;
 	bool isFiver;
 	unsigned int fiverCombo = 0;
@@ -18,6 +18,8 @@ public:
 	unsigned int GetCurrentCombo() { return currentCombo; }
 	unsigned int GetMaxCombo() { return maxCombo; }
 	unsigned int GetCrrentClearNum() { return currentClearNum; }
+	unsigned int GetMaxFiverGage() { return fiverGage; }
+	unsigned int GetCurrentFiverGage() { return fiverCombo; }
 	void ClearCombo();
 	void ClearNum();
 	void AddCombo(unsigned int combo);

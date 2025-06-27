@@ -136,20 +136,39 @@ void GameScene::Render(Player* player)
 
     int curLife = player->GetCurrentLife();
     int maxLife = player->GetMaxLife();
+
+    unsigned int fiverGage = combo.GetMaxFiverGage();
+    unsigned int curFiverGate = combo.GetCurrentFiverGage();
+
     IsGotoxy(2, 1);
     int previous1 = _setmode(_fileno(stdout), _O_U16TEXT);
     for (int i = 1; i <= maxLife; ++i) {
         if (i <= curLife) {
             SetColor(COLOR::RED);
             wcout << L"█";
-            SetColor(COLOR::WHITE);
         }
         else {
             SetColor(COLOR::GRAY);
             wcout << L"█";
-            SetColor(COLOR::WHITE);
         }
     }
+    
+    SetColor(COLOR::WHITE);
+
+    IsGotoxy(2, 4);
+    for (int i = 1; i <= fiverGage; ++i)
+    {
+        if (i <= curFiverGate) {
+            SetColor(COLOR::WHITE);
+            wcout << L"█";
+        }
+        else {
+            SetColor(COLOR::GRAY);
+            wcout << L"█";
+        }
+    }
+
+    SetColor(COLOR::WHITE);
     _setmode(_fileno(stdout), previous1);
 
     nodeRenderer.Render(nodeManager.GetNodes(), judgeState, nodeManager.GetJudgeLineX(), nodeManager);
