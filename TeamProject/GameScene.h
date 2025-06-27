@@ -13,6 +13,7 @@ class GameScene {
 public:
     GameScene();
     void Init(Player* player, SOUNDID songId);
+    void ClearAnimation();
     void Update(Player* player, Scene& curScene, Score& setScore, Combo& setCombo);
     void Render(Player* player);
 private:
