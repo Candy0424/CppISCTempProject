@@ -3,7 +3,9 @@
 void Combo::ClearCombo()
 {
 	if (currentCombo > maxCombo)
+	{
 		maxCombo = currentCombo;
+	}
 
 	while (currentCombo >= 10)
 	{
@@ -30,7 +32,9 @@ void Combo::AddCombo(unsigned int combo)
 		fiverCombo += combo;
 
 	if (currentCombo > maxCombo)
+	{
 		maxCombo = currentCombo;
+	}
 }
 
 void Combo::SetFiver(bool value)
